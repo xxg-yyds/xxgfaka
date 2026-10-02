@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./docs/logo.svg" width="112" alt="XXG发卡网" />
+<img src="./docs/logo.png" width="140" alt="XXG发卡网" />
 
 # XXG发卡网
 
