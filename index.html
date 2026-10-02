@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XXG发卡网 | 开源自动发卡系统，无感对接小小怪卡密系统</title>
+<meta name="description" content="XXG发卡网是一套开源、可自部署的数字商品自动发卡系统。付款即发货，与小小怪卡密系统一键对接，卡密生成后几秒内自动上架。">
+<meta name="theme-color" content="#f6f8f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0f0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<meta property="og:title" content="XXG发卡网">
+<meta property="og:description" content="开源自动发卡系统，无感对接小小怪卡密系统。">
+<meta property="og:image" content="assets/home-light.webp">
+<script>
+  (function () {
+    var t = localStorage.getItem('xxg-site-theme')
+    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+  })()
+</script>
+<script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js" defer></script>
+<style>
+  :root {
+    --bg: #f6f8f7;
+    --bg-2: #eef2f0;
+    --surface: #ffffff;
+    --ink: #111614;
+    --ink-2: #47524d;
+    --ink-3: #78837e;
+    --line: rgba(17, 22, 20, 0.09);
+    --line-2: rgba(17, 22, 20, 0.16);
+    --accent: #059669;
+    --accent-hover: #047857;
+    --accent-ink: #065f46;
+    --accent-soft: rgba(5, 150, 105, 0.09);
+    --on-accent: #ffffff;
+    --shadow: 0 1px 2px rgba(17, 22, 20, 0.05), 0 12px 32px -12px rgba(17, 22, 20, 0.16);
+    --shadow-lg: 0 2px 6px rgba(17, 22, 20, 0.05), 0 40px 80px -32px rgba(6, 95, 70, 0.32);
+    --r-sm: 10px;
+    --r: 16px;
+    --r-lg: 24px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --font: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0f0d;
+      --bg-2: #101613;
+      --surface: #131a17;
+      --ink: #e7eeea;
+      --ink-2: #a3b0aa;
+      --ink-3: #6f7c76;
+      --line: rgba(231, 238, 234, 0.08);
+      --line-2: rgba(231, 238, 234, 0.16);
+      --accent: #10b981;
+      --accent-hover: #34d399;
+      --accent-ink: #6ee7b7;
+      --accent-soft: rgba(16, 185, 129, 0.12);
+      --on-accent: #04241a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+      --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.3), 0 40px 80px -32px rgba(0, 0, 0, 0.8);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0f0d;
+    --bg-2: #101613;
+    --surface: #131a17;
+    --ink: #e7eeea;
+    --ink-2: #a3b0aa;
+    --ink-3: #6f7c76;
+    --line: rgba(231, 238, 234, 0.08);
+    --line-2: rgba(231, 238, 234, 0.16);
+    --accent: #10b981;
+    --accent-hover: #34d399;
+    --accent-ink: #6ee7b7;
+    --accent-soft: rgba(16, 185, 129, 0.12);
+    --on-accent: #04241a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.3), 0 40px 80px -32px rgba(0, 0, 0, 0.8);
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; }
+  iconify-icon { display: inline-block; width: 1em; height: 1em; flex: none; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  ::selection { background: var(--accent-soft); color: var(--ink); }
+
+  .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+  section { padding-block: clamp(72px, 10vw, 128px); }
+  h1, h2, h3 { margin: 0; color: var(--ink); text-wrap: balance; }
+  h1, h2 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: clamp(28px, 3.4vw, 42px); line-height: 1.22; font-weight: 800; letter-spacing: -0.02em; }
+  h3 { font-size: 18px; line-height: 1.4; font-weight: 700; }
+  p { margin: 0; text-wrap: pretty; }
+  .lead { margin-top: 16px; font-size: 17px; color: var(--ink-2); max-width: 60ch; }
+
+  /* 按钮 */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 46px; padding: 0 22px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; white-space: nowrap;
+    border: 1px solid transparent; cursor: pointer;
+    transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .btn:active { transform: translateY(1px) scale(0.985); }
+  .btn iconify-icon { font-size: 18px; }
+  .btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: 0 8px 20px -10px var(--accent); }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost { background: var(--surface); border-color: var(--line-2); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--ink-3); }
+  .btn-sm { height: 38px; padding: 0 16px; font-size: 14px; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 14px 5px 6px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--line);
+    font-size: 13px; font-weight: 600; color: var(--ink-2);
+    transition: border-color .2s var(--ease);
+  }
+  .eyebrow:hover { border-color: var(--line-2); }
+  .eyebrow b { padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-weight: 700; }
+
+  /* 顶栏 */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    backdrop-filter: saturate(1.6) blur(14px);
+    -webkit-backdrop-filter: saturate(1.6) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s var(--ease);
+  }
+  .nav.scrolled { border-bottom-color: var(--line); }
+  .nav .wrap { display: flex; align-items: center; height: 68px; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; white-space: nowrap; }
+  .brand img { width: 34px; height: 34px; }
+  .nav-links { display: flex; gap: 4px; margin-left: 16px; }
+  .nav-links a { padding: 8px 12px; border-radius: 999px; font-size: 14.5px; color: var(--ink-2); white-space: nowrap; transition: color .2s, background-color .2s; }
+  .nav-links a:hover { color: var(--ink); background: var(--bg-2); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .icon-btn {
+    width: 38px; height: 38px; display: grid; place-items: center;
+    border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+    color: var(--ink-2); cursor: pointer; font-size: 18px;
+    transition: color .2s, border-color .2s;
+  }
+  .icon-btn:hover { color: var(--ink); border-color: var(--line-2); }
+  .theme-dark-icon { display: none; }
+  :root[data-theme="dark"] .theme-light-icon { display: none; }
+  :root[data-theme="dark"] .theme-dark-icon { display: inline-block; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .theme-light-icon { display: none; }
+    :root:not([data-theme]) .theme-dark-icon { display: inline-block; }
+  }
+
+  /* 首屏 */
+  .hero { padding-block: clamp(40px, 6vw, 72px) clamp(56px, 7vw, 96px); position: relative; }
+  .hero::before {
+    content: ""; position: absolute; inset: -68px 0 auto 0; height: 760px; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(48% 56% at 78% 30%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+      radial-gradient(30% 40% at 10% 10%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%);
+  }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .hero h1 { margin-top: 22px; font-size: clamp(38px, 4.6vw, 60px); line-height: 1.14; font-weight: 800; letter-spacing: -0.03em; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lead { font-size: 18px; max-width: 30em; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .stage { position: relative; padding: 0 0 48px 0; }
+  .browser {
+    border-radius: 14px; overflow: hidden; background: var(--surface);
+    border: 1px solid var(--line); box-shadow: var(--shadow-lg);
+  }
+  .browser-bar { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border-bottom: 1px solid var(--line); background: var(--bg-2); }
+  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
+  .browser-bar span { margin-left: 12px; font-size: 12px; color: var(--ink-3); font-family: var(--mono); }
+  .browser img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; }
+  .phone {
+    position: absolute; right: -12px; bottom: 0; width: 30%;
+    border-radius: 30px; padding: 7px; background: #0d1210;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  }
+  .phone img { border-radius: 24px; aspect-ratio: 390 / 844; object-fit: cover; object-position: top; width: 100%; }
+
+  /* 技术栈 */
+  .stack { padding-block: 0 24px; }
+  .stack .wrap { display: flex; align-items: center; gap: 32px; border-top: 1px solid var(--line); padding-top: 32px; }
+  .stack p { font-size: 14px; color: var(--ink-3); white-space: nowrap; }
+  .logos { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 40px; }
+  .logo-item { display: flex; align-items: center; gap: 10px; color: var(--ink-3); font-size: 15px; font-weight: 600; transition: color .2s; }
+  .logo-item:hover { color: var(--ink); }
+  .logo-item i {
+    width: 22px; height: 22px; background: currentColor;
+    -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat;
+  }
+
+  /* 卡密对接 */
+  .kami-panel {
+    border-radius: var(--r-lg); padding: clamp(28px, 5vw, 64px);
+    background:
+      linear-gradient(180deg, var(--accent-soft), transparent 70%),
+      var(--surface);
+    border: 1px solid var(--line);
+  }
+  .kami-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 64px); align-items: center; margin-top: 48px; }
+  .steps { list-style: none; margin: 0; padding: 0; position: relative; }
+  .steps::before { content: ""; position: absolute; left: 21px; top: 44px; bottom: 44px; width: 2px; background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 15%, transparent)); border-radius: 2px; }
+  .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding-block: 14px; position: relative; }
+  .step-icon {
+    width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px;
+    background: var(--surface); border: 1px solid var(--line-2); color: var(--accent); font-size: 22px;
+    position: relative; z-index: 1;
+  }
+  .steps li:last-child .step-icon { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+  .steps p { margin-top: 4px; color: var(--ink-2); font-size: 15px; }
+  .kami-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; padding-left: 62px; }
+  .shot { border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--surface); }
+  .shot img { width: 100%; }
+
+  /* 四重同步 */
+  .sync-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px; }
+  .sync-head .lead { margin-top: 0; max-width: 34em; }
+  .bento { display: grid; grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: auto auto; gap: 16px; margin-top: 48px; }
+  .cell { border-radius: var(--r); padding: 28px; background: var(--surface); border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .cell p { margin-top: 8px; color: var(--ink-2); font-size: 15px; }
+  .cell-icon { font-size: 26px; color: var(--accent); margin-bottom: 20px; }
+  .cell-main {
+    grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+    background: linear-gradient(155deg, #047857, #065f46 60%, #053f30); color: #ecfdf5; border-color: transparent;
+  }
+  .cell-main h3 { color: #fff; font-size: 22px; }
+  .cell-main p { color: rgba(236, 253, 245, 0.78); }
+  .cell-wide { grid-column: span 2; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+  .cell-wide::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 40%, #000);
+    mask-image: linear-gradient(90deg, transparent 40%, #000);
+  }
+  .cell-wide > * { position: relative; z-index: 1; }
+  .ticker { display: flex; align-items: center; gap: 20px; }
+  .ring { width: 104px; height: 104px; position: relative; flex: none; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring circle { fill: none; stroke-width: 6; }
+  .ring .track { stroke: rgba(255, 255, 255, 0.14); }
+  .ring .bar { stroke: #6ee7b7; stroke-linecap: round; stroke-dasharray: 289; stroke-dashoffset: 289; animation: fill 3s linear infinite; }
+  .ring span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 26px; font-weight: 700; color: #fff; }
+  .ring span small { font-size: 13px; font-weight: 500; margin-left: 2px; opacity: .8; }
+  @keyframes fill { to { stroke-dashoffset: 0; } }
+  .ticker-log { font-family: var(--mono); font-size: 13px; line-height: 1.9; color: rgba(236, 253, 245, 0.72); }
+  .ticker-log b { color: #6ee7b7; font-weight: 600; }
+  .pulse-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #6ee7b7; margin-right: 8px; box-shadow: 0 0 0 0 rgba(110, 231, 183, .6); animation: pulse 3s ease-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(110, 231, 183, .6); } 40% { box-shadow: 0 0 0 10px rgba(110, 231, 183, 0); } 100% { box-shadow: 0 0 0 0 rgba(110, 231, 183, 0); } }
+  .stat-big { font-family: var(--mono); font-size: 44px; font-weight: 700; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+  .stat-big small { font-size: 16px; font-weight: 500; color: var(--ink-3); margin-left: 6px; }
+
+  /* 产品预览 */
+  .tour { background: var(--bg-2); border-block: 1px solid var(--line); }
+  .tour-head { text-align: center; }
+  .tour-head .lead { margin-inline: auto; }
+  .tabs { display: flex; justify-content: center; margin-top: 36px; }
+  .tablist { display: inline-flex; gap: 4px; padding: 5px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+  .tablist::-webkit-scrollbar { display: none; }
+  .tab {
+    border: 0; background: transparent; cursor: pointer; padding: 9px 20px; border-radius: 999px;
+    font-size: 14.5px; font-weight: 600; color: var(--ink-2); white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 8px; transition: color .2s, background-color .25s var(--ease);
+  }
+  .tab iconify-icon { font-size: 17px; }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { background: var(--accent); color: var(--on-accent); }
+  .panels { margin-top: 36px; display: grid; }
+  .panel { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 40px; align-items: center; align-content: start; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .45s var(--ease), transform .45s var(--ease), visibility 0s .45s; }
+  .panel.active { opacity: 1; visibility: visible; transform: none; transition: opacity .45s var(--ease), transform .45s var(--ease), visibility 0s; }
+  .panel .shot img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .phones { display: flex; justify-content: center; align-items: flex-start; gap: 24px; }
+  .phones .phone { position: static; width: min(240px, 44%); }
+  .phones .phone:nth-child(2) { margin-top: 48px; }
+  .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+  .points li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; }
+  .points iconify-icon { font-size: 22px; color: var(--accent); margin-top: 2px; }
+  .points b { display: block; font-size: 16px; color: var(--ink); }
+  .points span { font-size: 14.5px; color: var(--ink-2); }
+
+  /* 卖得放心 */
+  .assure { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 96px); }
+  .assure-head { position: sticky; top: 108px; align-self: start; }
+  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 48px; }
+  .feature iconify-icon { font-size: 26px; color: var(--accent); }
+  .feature h3 { margin-top: 14px; }
+  .feature p { margin-top: 6px; color: var(--ink-2); font-size: 15px; }
+
+  /* 部署 */
+  .deploy { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .reqs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .req { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 14px; font-weight: 600; color: var(--ink-2); }
+  .req iconify-icon { color: var(--accent); font-size: 16px; }
+  .deploy-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .term { border-radius: var(--r); overflow: hidden; background: #0d1311; border: 1px solid rgba(255, 255, 255, 0.07); box-shadow: var(--shadow-lg); color: #d6e2dc; }
+  .term-bar { display: flex; align-items: center; gap: 4px; padding: 8px 8px 8px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+  .term-tab { border: 0; background: transparent; color: #8a9a93; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: color .2s, background-color .2s; }
+  .term-tab:hover { color: #d6e2dc; }
+  .term-tab[aria-selected="true"] { background: rgba(255, 255, 255, 0.07); color: #fff; }
+  .copy { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: #8a9a93; font-size: 13px; padding: 6px 10px; border-radius: 8px; cursor: pointer; transition: color .2s; }
+  .copy:hover { color: #fff; }
+  .copy.done { color: #6ee7b7; }
+  .term pre { margin: 0; padding: 22px 24px 26px; font-family: var(--mono); font-size: 13.5px; line-height: 1.85; overflow-x: auto; }
+  .term pre[hidden] { display: none; }
+  .c { color: #6b7d75; }
+  .k { color: #6ee7b7; }
+  .s { color: #fcd34d; }
+
+  /* 收尾 */
+  .final { padding-block: 0 clamp(72px, 10vw, 120px); }
+  .final-box {
+    border-radius: var(--r-lg); padding: clamp(40px, 7vw, 88px) clamp(24px, 5vw, 64px);
+    text-align: center; position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #047857, #065f46 55%, #053b2d); color: #ecfdf5;
+  }
+  .final-box::before {
+    content: ""; position: absolute; inset: 0; opacity: .14;
+    background-image: linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size: 36px 36px;
+    -webkit-mask-image: radial-gradient(60% 70% at 50% 0%, #000, transparent);
+    mask-image: radial-gradient(60% 70% at 50% 0%, #000, transparent);
+  }
+  .final-box > * { position: relative; }
+  .final-logo { display: grid; place-items: center; width: 80px; height: 80px; margin: 0 auto 28px; border-radius: 22px; background: #fff; box-shadow: 0 16px 40px -16px rgba(0,0,0,.45); }
+  .final-logo img { width: 56px; height: 56px; }
+  .final-box h2 { color: #fff; }
+  .final-box p { margin: 16px auto 0; color: rgba(236, 253, 245, .8); max-width: 34em; font-size: 17px; }
+  .final-cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .final-box .btn-primary { background: #fff; color: #065f46; box-shadow: 0 10px 30px -12px rgba(0,0,0,.4); }
+  .final-box .btn-primary:hover { background: #ecfdf5; }
+  .final-box .btn-ghost { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.25); color: #fff; }
+  .final-box .btn-ghost:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.4); }
+
+  .footer { border-top: 1px solid var(--line); padding-block: 56px 40px; font-size: 14.5px; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 32px; }
+  .footer-grid > div:first-child p { margin-top: 14px; color: var(--ink-3); max-width: 24em; }
+  .footer h4 { margin: 0 0 14px; font-size: 14px; color: var(--ink); }
+  .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .footer ul a { color: var(--ink-2); display: inline-flex; align-items: center; gap: 8px; transition: color .2s; }
+  .footer ul a:hover { color: var(--accent); }
+  .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 13.5px; }
+
+  /* 两种对接方式 */
+  .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--line); }
+  .mode { padding: 24px 26px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+  .mode-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .mode-head iconify-icon { font-size: 22px; color: var(--accent); }
+  .tag { padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--accent-soft); color: var(--accent-ink); }
+  .mode ol { margin: 16px 0 0; padding: 0; list-style: none; counter-reset: m; display: grid; gap: 10px; }
+  .mode li { counter-increment: m; display: grid; grid-template-columns: 24px 1fr; gap: 10px; font-size: 15px; color: var(--ink-2); }
+  .mode li::before { content: counter(m); width: 24px; height: 24px; border-radius: 8px; display: grid; place-items: center; background: var(--bg-2); color: var(--ink); font: 700 12px/1 var(--mono); margin-top: 2px; }
+  .mode code { word-break: break-all; }
+  .mode code, .faq code { font-family: var(--mono); font-size: .9em; padding: 1px 6px; border-radius: 6px; background: var(--bg-2); color: var(--ink); }
+
+  /* 订单流程 */
+  .flow-head { max-width: 640px; }
+  .flow { list-style: none; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; position: relative; }
+  .flow::before, .flow::after { content: ""; position: absolute; top: 27px; left: 28px; right: calc(20% - 28px); height: 2px; border-radius: 2px; }
+  .flow::before { background: var(--line-2); }
+  .flow::after { background: var(--accent); transform-origin: left; transform: scaleX(0); transition: transform 1.6s var(--ease) .2s; }
+  .flow.in::after { transform: scaleX(1); }
+  .flow li { position: relative; }
+  .flow-icon {
+    width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; font-size: 24px;
+    background: var(--surface); border: 1px solid var(--line-2); color: var(--accent); position: relative; z-index: 1;
+    box-shadow: 0 0 0 8px var(--bg);
+  }
+  .flow li:last-child .flow-icon { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+  .flow-no { display: block; margin-top: 22px; font: 600 12px/1 var(--mono); color: var(--ink-3); letter-spacing: .08em; }
+  .flow h3 { margin-top: 8px; }
+  .flow p { margin-top: 6px; font-size: 14.5px; color: var(--ink-2); }
+
+  /* 卡密管理标注 */
+  .cards-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: end; }
+  .annot { margin-top: 48px; position: relative; }
+  .annot .shot img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .hs {
+    position: absolute; left: var(--x); top: var(--y); z-index: 2; translate: -50% -50%;
+    width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--accent); color: var(--on-accent); font: 700 14px/1 var(--mono);
+    border: 2px solid var(--surface); cursor: pointer;
+    box-shadow: 0 6px 16px -4px rgba(5, 150, 105, .6);
+    transition: scale .2s var(--ease);
+  }
+  .hs::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid var(--accent); animation: ping 2.4s var(--ease) infinite; }
+  .hs:hover, .hs.on { scale: 1.15; }
+  @keyframes ping { 0% { opacity: .8; transform: scale(1); } 80%, 100% { opacity: 0; transform: scale(2.1); } }
+  .legend { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .legend li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 16px; border-radius: var(--r); transition: background-color .25s var(--ease); cursor: default; }
+  .legend li.on { background: var(--surface); box-shadow: var(--shadow); }
+  .legend .no { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-ink); font: 700 13px/1 var(--mono); }
+  .legend b { display: block; font-size: 15.5px; }
+  .legend span { display: block; margin-top: 4px; font-size: 14px; color: var(--ink-2); }
+
+  /* 功能清单 */
+  .spec { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 48px; align-items: start; }
+  .spec-col { padding: 28px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+  .spec-col:nth-child(2) { grid-row: span 2; }
+  .spec-title { display: flex; align-items: center; gap: 10px; padding-bottom: 18px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .spec-title iconify-icon { font-size: 22px; color: var(--accent); }
+  .spec ul { list-style: none; margin: 0; padding: 0; }
+  .spec li { padding: 12px 0; border-bottom: 1px dashed var(--line); }
+  .spec li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .spec li b { display: block; font-size: 15px; }
+  .spec li span { display: block; margin-top: 2px; font-size: 14px; color: var(--ink-2); }
+  .note {
+    display: flex; gap: 12px; margin-top: 16px; padding: 18px 22px; border-radius: var(--r);
+    background: var(--accent-soft); color: var(--ink-2); font-size: 14.5px;
+  }
+  .note iconify-icon { font-size: 20px; color: var(--accent); margin-top: 2px; }
+  .note b { color: var(--ink); }
+
+  /* 安全参数 */
+  .secure { margin-top: 72px; border-radius: var(--r-lg); background: #0d1311; border: 1px solid rgba(255, 255, 255, .08); color: #d6e2dc; padding: clamp(28px, 4vw, 48px); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 32px; align-items: center; }
+  .secure h3 { color: #fff; font-size: 22px; }
+  .secure p { margin-top: 8px; color: #8fa29a; font-size: 15px; }
+  .nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .num { padding: 4px 20px; border-left: 1px solid rgba(255, 255, 255, .08); }
+  .num strong { display: block; font: 700 30px/1.2 var(--mono); color: #6ee7b7; letter-spacing: -.02em; white-space: nowrap; }
+  .num strong small { font-size: 14px; font-weight: 500; color: #8fa29a; margin-left: 4px; }
+  .num span { display: block; margin-top: 8px; font-size: 13.5px; color: #a9b8b1; }
+
+  /* 截图一览 */
+  .gallery-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+  .g-ctrl { display: flex; gap: 8px; }
+  .gallery {
+    --h: 340px;
+    display: flex; gap: 20px; overflow-x: auto; margin-top: 40px;
+    padding: 4px max(24px, (100% - 1200px) / 2) 24px;
+    scroll-snap-type: x mandatory; scroll-padding-inline: max(24px, (100% - 1200px) / 2);
+    scrollbar-width: none;
+  }
+  .gallery::-webkit-scrollbar { display: none; }
+  .g-item { flex: none; scroll-snap-align: start; margin: 0; }
+  .g-item button { display: block; padding: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); cursor: zoom-in; box-shadow: var(--shadow); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+  .g-item button:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .g-item img { height: var(--h); width: auto; object-fit: cover; object-position: top; }
+  .g-item.desk img { aspect-ratio: 16 / 10; }
+  .g-item.mob img { aspect-ratio: 390 / 844; }
+  .g-item figcaption { margin-top: 14px; font-size: 14.5px; color: var(--ink-2); }
+  .g-item figcaption b { color: var(--ink); margin-right: 8px; }
+
+  /* 常见问题 */
+  .faq-wrap { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: clamp(32px, 6vw, 96px); }
+  .faq-head { position: sticky; top: 108px; align-self: start; }
+  .faq { border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; font-size: 17px; font-weight: 700; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary iconify-icon { font-size: 20px; color: var(--ink-3); transition: transform .3s var(--ease), color .2s; }
+  .faq details[open] summary iconify-icon { transform: rotate(45deg); color: var(--accent); }
+  .faq summary:hover { color: var(--accent); }
+  .faq .ans { padding: 0 40px 24px 0; color: var(--ink-2); font-size: 15.5px; }
+  .faq details[open] .ans { animation: rise .4s var(--ease); }
+
+  /* 访问信息 */
+  .access { margin-top: 28px; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); }
+  .access div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 18px; font-size: 14.5px; }
+  .access div + div { border-top: 1px solid var(--line); }
+  .access span { color: var(--ink-3); }
+  .access code { font-family: var(--mono); font-size: 13.5px; color: var(--ink); }
+
+  /* 大图预览 */
+  .lightbox { position: fixed; inset: 0; z-index: 200; display: grid; grid-template-rows: auto 1fr auto; padding: 16px; background: rgba(6, 10, 8, .86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), visibility 0s .3s; }
+  .lightbox[hidden] { display: none; }
+  .lightbox.open { opacity: 1; visibility: visible; transition: opacity .3s var(--ease), visibility 0s; }
+  .lb-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #e7eeea; padding: 0 8px 12px; }
+  .lb-top b { font-size: 15px; }
+  .lb-top span { color: #8fa29a; font-size: 14px; margin-left: 10px; }
+  .lb-stage { display: grid; place-items: center; min-height: 0; }
+  .lb-stage img { max-width: min(1400px, 100%); max-height: calc(100dvh - 150px); width: auto; height: auto; border-radius: 12px; box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .7); transform: scale(.97); transition: transform .35s var(--ease); }
+  .lightbox.open .lb-stage img { transform: none; }
+  .lb-nav { display: flex; justify-content: center; gap: 12px; padding-top: 14px; }
+  .lb-btn { width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .06); color: #fff; font-size: 20px; cursor: pointer; transition: background-color .2s; }
+  .lb-btn:hover { background: rgba(255, 255, 255, .14); }
+  .zoomable { cursor: zoom-in; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 32px; z-index: 100; translate: -50% 16px; opacity: 0; pointer-events: none;
+    display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 999px;
+    background: var(--ink); color: var(--bg); font-size: 14.5px; font-weight: 600; box-shadow: var(--shadow-lg);
+    transition: opacity .3s var(--ease), translate .3s var(--ease);
+  }
+  .toast.show { opacity: 1; translate: -50% 0; }
+  .toast iconify-icon { font-size: 18px; color: var(--accent); }
+
+  /* 动效 */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+  .reveal.in { opacity: 1; transform: none; }
+  .hero-in > * { animation: rise .9s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+  .stage { animation: stage 1.1s var(--ease) .2s both; }
+  .stage .phone { animation: phone 1.1s var(--ease) .45s both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+  @keyframes stage { from { opacity: 0; transform: translateY(28px) scale(.98); } }
+  @keyframes phone { from { opacity: 0; transform: translate(24px, 32px); } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+    .ring .bar { stroke-dashoffset: 0; }
+  }
+
+  /* 响应式 */
+  @media (max-width: 1024px) {
+    .nav-links { display: none; }
+    .hero .wrap, .kami-grid, .deploy, .assure { grid-template-columns: 1fr; }
+    .assure-head { position: static; }
+    .hero .wrap { text-align: left; }
+    .stage { max-width: 760px; }
+    .bento { grid-template-columns: 1fr 1fr; }
+    .cell-main { grid-row: auto; grid-column: span 2; }
+    .panel { grid-template-columns: 1fr; gap: 28px; }
+    .points { grid-template-columns: repeat(3, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid > div:first-child { grid-column: span 2; }
+    .flow { grid-template-columns: 1fr; gap: 0; margin-top: 40px; }
+    .flow::before, .flow::after { top: 28px; bottom: 28px; left: 27px; right: auto; width: 2px; height: auto; transform-origin: top; }
+    .flow::after { transform: scaleY(0); }
+    .flow.in::after { transform: scaleY(1); }
+    .flow li { display: grid; grid-template-columns: 56px 1fr; column-gap: 20px; padding-bottom: 28px; }
+    .flow li:last-child { padding-bottom: 0; }
+    .flow-icon { grid-row: span 3; }
+    .flow-no { margin-top: 4px; }
+    .cards-head, .faq-wrap, .secure { grid-template-columns: 1fr; }
+    .faq-head { position: static; }
+    .legend { grid-template-columns: 1fr 1fr; }
+    .spec { grid-template-columns: 1fr 1fr; }
+    .spec-col:nth-child(2) { grid-row: auto; }
+    .spec-col:nth-child(3) { grid-column: span 2; }
+  }
+  @media (max-width: 640px) {
+    .wrap { width: min(1200px, 100% - 32px); }
+    .nav .wrap { height: 60px; gap: 12px; }
+    .brand { font-size: 16px; }
+    .brand img { width: 30px; height: 30px; }
+    .nav-right .btn { display: none; }
+    .hero h1 { font-size: clamp(32px, 9vw, 40px); }
+    .hero .lead { font-size: 16px; }
+    .hero-cta .btn { flex: 1 1 100%; }
+    .stage { padding-bottom: 36px; }
+    .phone { width: 34%; right: -4px; border-radius: 22px; padding: 5px; }
+    .phone img { border-radius: 18px; }
+    .browser-bar span { display: none; }
+    .stack .wrap { flex-direction: column; align-items: flex-start; gap: 18px; }
+    .logos { gap: 14px 24px; }
+    .kami-actions { padding-left: 0; }
+    .kami-actions .btn { flex: 1 1 100%; }
+    .bento { grid-template-columns: 1fr; }
+    .cell-main, .cell-wide { grid-column: auto; }
+    .cell-wide { grid-template-columns: 1fr; }
+    .ticker { flex-direction: column; align-items: flex-start; }
+    .tabs { justify-content: flex-start; }
+    .tab { padding: 8px 14px; }
+    .tab iconify-icon { display: none; }
+    .points { grid-template-columns: 1fr; }
+    .phones .phone { width: 46%; }
+    .features { grid-template-columns: 1fr; gap: 32px; }
+    .term pre { font-size: 12.5px; padding: 18px; }
+    .deploy-cta .btn, .final-cta .btn { flex: 1 1 100%; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .modes { grid-template-columns: 1fr; margin-top: 36px; padding-top: 32px; }
+    .mode { padding: 20px; }
+    .hs { width: 24px; height: 24px; font-size: 11px; }
+    .legend { grid-template-columns: 1fr; }
+    .legend li { padding: 12px; }
+    .spec { grid-template-columns: 1fr; }
+    .spec-col:nth-child(3) { grid-column: auto; }
+    .spec-col { padding: 22px; }
+    .nums { grid-template-columns: 1fr 1fr; row-gap: 24px; }
+    .num { padding: 0 16px; }
+    .num:nth-child(odd) { border-left: 0; padding-left: 0; }
+    .num strong { font-size: 24px; }
+    .gallery { --h: 196px; gap: 14px; }
+    .g-ctrl { display: none; }
+    .faq summary { font-size: 16px; padding: 18px 0; }
+    .faq .ans { padding-right: 0; }
+    .lightbox { padding: 12px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="XXG发卡网 首页">
+      <img src="assets/logo.png" alt="" width="34" height="34">
+      <span>XXG发卡网</span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#kami">卡密对接</a>
+      <a href="#sync">同步机制</a>
+      <a href="#tour">产品预览</a>
+      <a href="#features">功能清单</a>
+      <a href="#deploy">部署</a>
+      <a href="#faq">常见问题</a>
+      <a href="#" data-link="docs">文档</a>
+    </nav>
+    <div class="nav-right">
+      <a class="icon-btn" href="#" data-link="repo" target="_blank" rel="noopener" aria-label="GitHub 仓库"><iconify-icon icon="ph:github-logo"></iconify-icon></a>
+      <button class="icon-btn" id="theme" type="button" aria-label="切换浅色或深色主题">
+        <iconify-icon class="theme-light-icon" icon="ph:moon"></iconify-icon>
+        <iconify-icon class="theme-dark-icon" icon="ph:sun"></iconify-icon>
+      </button>
+      <a class="btn btn-primary btn-sm" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-in">
+        <a class="eyebrow" href="#kami" style="--i:0"><b>原生对接</b>小小怪卡密系统，一键即连</a>
+        <h1 style="--i:1">付款即发货的<br><em>数字商品</em>发卡网</h1>
+        <p class="lead" style="--i:2">开源、可自部署。卡密在小小怪卡密系统生成，几秒内自动上架，售出自动回传。</p>
+        <div class="hero-cta" style="--i:3">
+          <a class="btn btn-primary" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+          <a class="btn btn-ghost" href="#" data-link="repo" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>查看源码</a>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>shop.example.com</span></div>
+          <img src="assets/home-light.webp" data-shot="home" alt="XXG发卡网商城首页，展示商品分类、热销商品与成交动态" width="2560" height="1600" fetchpriority="high">
+        </div>
+        <div class="phone">
+          <img src="assets/m-pay-light.webp" data-shot="m-pay" alt="手机端支付页面，展示收款二维码与支付倒计时" width="1170" height="2532">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stack">
+    <div class="wrap">
+      <p>基于成熟的开源技术构建</p>
+      <div class="logos">
+        <span class="logo-item"><i style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/vuedotjs.svg)"></i>Vue 3</span>
+        <span class="logo-item"><i style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/vite.svg)"></i>Vite</span>
+        <span class="logo-item"><i style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/springboot.svg)"></i>Spring Boot</span>
+        <span class="logo-item"><i style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/openjdk.svg)"></i>Java 21</span>
+        <span class="logo-item"><i style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/mysql.svg)"></i>MySQL</span>
+        <span class="logo-item"><i style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/redis.svg)"></i>Redis</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="kami">
+    <div class="wrap">
+      <div class="kami-panel reveal">
+        <h2>无感对接小小怪卡密系统<br>生成即上架，售出即同步</h2>
+        <p class="lead">不用手动导出导入，也不用复制对接参数。两套系统部署在同一台服务器或同一内网时，三步就能打通卡密从生成到售出的全流程。</p>
+        <div class="kami-grid">
+          <div>
+            <ol class="steps">
+              <li class="reveal" style="--d:.05s">
+                <span class="step-icon"><iconify-icon icon="ph:magnifying-glass-bold"></iconify-icon></span>
+                <div><h3>检测本地发卡网</h3><p>在卡密系统后台扫描本机与内网，自动识别已部署的 XXG发卡网。</p></div>
+              </li>
+              <li class="reveal" style="--d:.15s">
+                <span class="step-icon"><iconify-icon icon="ph:plugs-connected-bold"></iconify-icon></span>
+                <div><h3>一键添加</h3><p>对接 ID 与密钥由卡密系统生成并自动下发，全程无需复制粘贴。</p></div>
+              </li>
+              <li class="reveal" style="--d:.25s">
+                <span class="step-icon"><iconify-icon icon="ph:storefront-bold"></iconify-icon></span>
+                <div><h3>自动上架</h3><p>新卡密按应用和规格归类，自动上架到绑定的商品，库存实时更新。</p></div>
+              </li>
+            </ol>
+            <div class="kami-actions">
+              <a class="btn btn-ghost" href="#" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:arrow-square-out"></iconify-icon>了解小小怪卡密系统</a>
+            </div>
+          </div>
+          <div class="shot reveal" style="--d:.1s">
+            <img src="assets/kami-light.webp" data-shot="kami" alt="发卡网后台的卡密系统对接页，显示在线状态、心跳与自动同步情况" width="2560" height="1600" loading="lazy">
+          </div>
+        </div>
+        <div class="modes">
+          <div class="mode reveal">
+            <div class="mode-head"><iconify-icon icon="ph:hard-drives-bold"></iconify-icon><h3>同一服务器或内网</h3><span class="tag">推荐 · 一键对接</span></div>
+            <ol>
+              <li><span>在发卡网后台「系统设置 · 卡密系统对接」保持「允许一键对接」开启</span></li>
+              <li><span>在卡密系统「发卡网对接」页点击「检测本地发卡网」，通过标准发现接口 <code>/.well-known/xxgkami-card-shop</code> 扫描到本站</span></li>
+              <li><span>选择 XXG发卡网，点击「一键添加」，对接 ID 与密钥自动下发，设置页显示「卡密系统在线」</span></li>
+            </ol>
+          </div>
+          <div class="mode reveal" style="--d:.08s">
+            <div class="mode-head"><iconify-icon icon="ph:globe-hemisphere-east-bold"></iconify-icon><h3>不同服务器</h3><span class="tag">手动对接</span></div>
+            <ol>
+              <li><span>在卡密系统中添加发卡网，对接地址填写发卡网设置页显示的「本站对接地址」</span></li>
+              <li><span>把卡密系统生成的对接 ID 与密钥填入发卡网，并填写卡密系统接口地址</span></li>
+              <li><span>点击「检测连接」；还可额外配置一个内网地址，公网不通时自动切换</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sync" style="padding-top:0">
+    <div class="wrap">
+      <div class="sync-head reveal">
+        <h2>四重同步，库存始终一致</h2>
+        <p class="lead">推送、定时、心跳、对账四条链路互为备份，任何一条中断，其余链路都会补上。</p>
+      </div>
+      <div class="bento">
+        <article class="cell cell-main reveal">
+          <div>
+            <h3>每 3 秒自动同步</h3>
+            <p>独立于推送和心跳运行，只拉取新增卡密，没有新卡密时不写库。失败后自动退避，恢复后立即回到 3 秒节奏。</p>
+          </div>
+          <div class="ticker">
+            <div class="ring" aria-hidden="true">
+              <svg viewBox="0 0 104 104"><circle class="track" cx="52" cy="52" r="46"/><circle class="bar" cx="52" cy="52" r="46"/></svg>
+              <span id="tick">3<small>s</small></span>
+            </div>
+            <div class="ticker-log" aria-hidden="true">
+              <div><span class="pulse-dot"></span>自动同步运行中</div>
+              <div>已同步 <b id="syncCount">0</b> 次</div>
+              <div>新增卡密 <b id="syncAdded">0</b> 张</div>
+            </div>
+          </div>
+        </article>
+        <article class="cell reveal" style="--d:.08s">
+          <iconify-icon class="cell-icon" icon="ph:lightning-bold"></iconify-icon>
+          <h3>实时推送</h3>
+          <p>卡密上架、修改、停用或被使用时，卡密系统立即推送，重复事件自动去重。</p>
+        </article>
+        <article class="cell reveal" style="--d:.16s">
+          <iconify-icon class="cell-icon" icon="ph:heartbeat-bold"></iconify-icon>
+          <h3>心跳同步</h3>
+          <p>心跳发现新卡密立即拉取，同时上报库存，卡密系统实时显示在线状态。</p>
+        </article>
+        <article class="cell cell-wide reveal" style="--d:.24s">
+          <div>
+            <iconify-icon class="cell-icon" icon="ph:scales-bold"></iconify-icon>
+            <h3>定期全量对账</h3>
+            <p>自动移除已下架、停用或删除的卡密，两边库存数字一张不差。</p>
+          </div>
+          <div class="stat-big">30<small>分钟一次</small></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="flow" style="padding-top:0">
+    <div class="wrap">
+      <div class="flow-head reveal">
+        <h2>一笔订单，从下单到发货全程自动</h2>
+        <p class="lead">买家付款后无需店主介入。每一步都有兜底，网络抖动、卡密失效、并发抢购都不会出错。</p>
+      </div>
+      <ol class="flow reveal">
+        <li>
+          <span class="flow-icon"><iconify-icon icon="ph:shopping-cart-simple-bold"></iconify-icon></span>
+          <span class="flow-no">STEP 01</span>
+          <h3>买家下单</h3>
+          <p>游客填写联系方式与查询密码即可下单，登录用户可用余额与优惠券。</p>
+        </li>
+        <li>
+          <span class="flow-icon"><iconify-icon icon="ph:lock-simple-bold"></iconify-icon></span>
+          <span class="flow-no">STEP 02</span>
+          <h3>锁定库存</h3>
+          <p>在事务中锁定卡密并扣减库存，多人同时抢购也不会超卖。</p>
+        </li>
+        <li>
+          <span class="flow-icon"><iconify-icon icon="ph:qr-code-bold"></iconify-icon></span>
+          <span class="flow-no">STEP 03</span>
+          <h3>扫码付款</h3>
+          <p>支付页显示收款二维码与倒计时，超时未付的订单自动关闭并释放卡密。</p>
+        </li>
+        <li>
+          <span class="flow-icon"><iconify-icon icon="ph:seal-check-bold"></iconify-icon></span>
+          <span class="flow-no">STEP 04</span>
+          <h3>确认售出</h3>
+          <p>先向卡密系统回传售出，卡密已失效时自动换卡；失败按订单号幂等重试。</p>
+        </li>
+        <li>
+          <span class="flow-icon"><iconify-icon icon="ph:paper-plane-tilt-bold"></iconify-icon></span>
+          <span class="flow-no">STEP 05</span>
+          <h3>自动发货</h3>
+          <p>卡密展示在订单页一键复制，配置邮箱后同时发送到买家邮箱。</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="tour" id="tour">
+    <div class="wrap">
+      <div class="tour-head reveal">
+        <h2>前台好用，后台省心</h2>
+        <p class="lead">以下均为真实运行截图，浅色与深色主题随系统自动切换。</p>
+      </div>
+      <div class="tabs reveal">
+        <div class="tablist" role="tablist" aria-label="产品预览">
+          <button class="tab" role="tab" aria-selected="true" aria-controls="p-cards" id="t-cards"><iconify-icon icon="ph:cards-bold"></iconify-icon>自动配卡</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="p-dash" id="t-dash" tabindex="-1"><iconify-icon icon="ph:chart-line-up-bold"></iconify-icon>管理后台</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="p-shop" id="t-shop" tabindex="-1"><iconify-icon icon="ph:storefront-bold"></iconify-icon>商城前台</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="p-mobile" id="t-mobile" tabindex="-1"><iconify-icon icon="ph:device-mobile-bold"></iconify-icon>手机端</button>
+        </div>
+      </div>
+      <div class="panels reveal">
+        <div class="panel active" role="tabpanel" id="p-cards" aria-labelledby="t-cards">
+          <div class="shot"><img src="assets/product-cards-light.webp" data-shot="product-cards" alt="商品卡密抽屉，配置自动配卡分类并从卡密池添加卡密" width="2560" height="1600" loading="lazy"></div>
+          <ul class="points">
+            <li><iconify-icon icon="ph:tag-bold"></iconify-icon><div><b>按分类自动配卡</b><span>卡密按应用和规格自动分类，绑定商品后新卡密直接入库。</span></div></li>
+            <li><iconify-icon icon="ph:stack-bold"></iconify-icon><div><b>卡密池随取随用</b><span>未分配的卡密进入卡密池，可勾选或按数量上架到任意商品。</span></div></li>
+            <li><iconify-icon icon="ph:upload-simple-bold"></iconify-icon><div><b>批量导入去重</b><span>手动卡密一行一张批量导入，全局去重，杜绝重复发货。</span></div></li>
+          </ul>
+        </div>
+        <div class="panel" role="tabpanel" id="p-dash" aria-labelledby="t-dash">
+          <div class="shot"><img src="assets/dashboard-light.webp" data-shot="dashboard" alt="管理后台仪表盘，展示销售额、订单趋势与库存提醒" width="2560" height="1600" loading="lazy"></div>
+          <ul class="points">
+            <li><iconify-icon icon="ph:chart-bar-bold"></iconify-icon><div><b>经营数据一目了然</b><span>销售额、订单量与趋势图表，按日查看经营状况。</span></div></li>
+            <li><iconify-icon icon="ph:bell-ringing-bold"></iconify-icon><div><b>库存告急提醒</b><span>库存不足与待处理订单及时提醒，避免断货。</span></div></li>
+            <li><iconify-icon icon="ph:plugs-bold"></iconify-icon><div><b>对接状态实时可见</b><span>侧栏常驻卡密系统在线状态，异常第一时间发现。</span></div></li>
+          </ul>
+        </div>
+        <div class="panel" role="tabpanel" id="p-shop" aria-labelledby="t-shop">
+          <div class="shot"><img src="assets/home-light.webp" data-shot="home" alt="商城首页，展示分类导航与热销商品" width="2560" height="1600" loading="lazy"></div>
+          <ul class="points">
+            <li><iconify-icon icon="ph:squares-four-bold"></iconify-icon><div><b>分类清晰好找</b><span>分类导航、热销推荐与成交动态，买家快速找到商品。</span></div></li>
+            <li><iconify-icon icon="ph:user-circle-bold"></iconify-icon><div><b>游客也能下单</b><span>无需注册即可购买，凭订单号或联系方式随时查单取卡。</span></div></li>
+            <li><iconify-icon icon="ph:ticket-bold"></iconify-icon><div><b>优惠券与公告</b><span>内置优惠券、店铺公告与常见问题，运营工具开箱即用。</span></div></li>
+          </ul>
+        </div>
+        <div class="panel" role="tabpanel" id="p-mobile" aria-labelledby="t-mobile">
+          <div class="phones">
+            <div class="phone"><img src="assets/m-product-light.webp" data-shot="m-product" alt="手机端商品详情页" width="1170" height="2532" loading="lazy"></div>
+            <div class="phone"><img src="assets/m-pay-light.webp" data-shot="m-pay" alt="手机端支付页" width="1170" height="2532" loading="lazy"></div>
+          </div>
+          <ul class="points">
+            <li><iconify-icon icon="ph:device-mobile-camera-bold"></iconify-icon><div><b>移动端完整适配</b><span>商城与后台均适配手机，随时随地下单和管理。</span></div></li>
+            <li><iconify-icon icon="ph:qr-code-bold"></iconify-icon><div><b>扫码支付页</b><span>收款二维码与支付倒计时，付款成功后自动跳转到订单页取卡。</span></div></li>
+            <li><iconify-icon icon="ph:moon-stars-bold"></iconify-icon><div><b>深色模式</b><span>跟随系统或手动切换，夜间浏览更舒适。</span></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cards">
+    <div class="wrap">
+      <div class="cards-head reveal">
+        <h2>卡密管理，<br>一个页面全部搞定</h2>
+        <p class="lead" style="margin-top:0">手动导入的卡密和卡密系统同步来的卡密统一管理。移到或点按截图上的编号，查看每块区域的用途。</p>
+      </div>
+      <div class="annot reveal">
+        <div class="shot"><img src="assets/cards-light.webp" data-shot="cards" alt="卡密管理页面：顶部操作按钮、统计卡片、筛选栏与卡密列表" width="2560" height="1600" loading="lazy"></div>
+        <button class="hs" type="button" style="--x:53%;--y:16.8%" data-hs="1" aria-label="标注 1">1</button>
+        <button class="hs" type="button" style="--x:47.6%;--y:23.5%" data-hs="2" aria-label="标注 2">2</button>
+        <button class="hs" type="button" style="--x:19.5%;--y:40%" data-hs="3" aria-label="标注 3">3</button>
+        <button class="hs" type="button" style="--x:85%;--y:51.6%" data-hs="4" aria-label="标注 4">4</button>
+      </div>
+      <ol class="legend">
+        <li data-hs="1"><span class="no">1</span><div><b>分类与自动配卡</b><span>为每个应用规格选择商品；也可手动从卡密系统同步、核对已售卡密状态。</span></div></li>
+        <li data-hs="2"><span class="no">2</span><div><b>库存一目了然</b><span>总数、未售出、卡密池、已售出、已锁定与来自卡密系统的数量实时统计。</span></div></li>
+        <li data-hs="3"><span class="no">3</span><div><b>多维筛选</b><span>按商品、分类、状态筛选，支持搜索卡密内容或订单号，可一键导出。</span></div></li>
+        <li data-hs="4"><span class="no">4</span><div><b>来源与激活状态</b><span>区分手动导入与卡密系统来源，已售卡密可看到买家是否已激活。</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="features" style="padding-top:0">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>功能清单</h2>
+        <p class="lead">商城、后台、对接一套齐全，不需要再拼装插件。</p>
+      </div>
+      <div class="spec">
+        <div class="spec-col reveal">
+          <div class="spec-title"><iconify-icon icon="ph:storefront-bold"></iconify-icon><h3>商城前台</h3></div>
+          <ul>
+            <li><b>首页与商品列表</b><span>分类导航、商品搜索、实时成交动态、公告与常见问题</span></li>
+            <li><b>商品详情</b><span>价格、库存、销量、购买须知，支持限购与优惠券</span></li>
+            <li><b>游客下单</b><span>填写联系方式与查询密码即可购买，无需注册</span></li>
+            <li><b>订单查询</b><span>凭订单号，或联系方式加查询密码找回订单</span></li>
+            <li><b>用户中心</b><span>邮箱验证码注册，我的订单、优惠券、余额与账号设置</span></li>
+            <li><b>独立店铺页</b><span>通过 /s/店铺标识 访问，可自定义名称、头像与简介</span></li>
+          </ul>
+        </div>
+        <div class="spec-col reveal" style="--d:.06s">
+          <div class="spec-title"><iconify-icon icon="ph:gauge-bold"></iconify-icon><h3>管理后台</h3></div>
+          <ul>
+            <li><b>仪表盘</b><span>经营统计、销售趋势、分类占比、销量排行、库存告急</span></li>
+            <li><b>商品与分类</b><span>图标封面与色调、划线价、自动或人工发货、上下架、实时预览</span></li>
+            <li><b>卡密管理</b><span>TXT 批量导入并全局去重，锁定、导出、上架到商品、退回卡密池</span></li>
+            <li><b>订单管理</b><span>按状态、支付方式、时间筛选，人工发货、关闭、退款并回收卡密</span></li>
+            <li><b>优惠券</b><span>固定金额或折扣、最低消费、适用商品、有效期、发放与限用次数</span></li>
+            <li><b>买家管理</b><span>查看买家订单、调整余额并记录流水、封禁账号</span></li>
+            <li><b>系统设置</b><span>站点与维护模式、支付、邮件、卡密系统对接、图标库</span></li>
+            <li><b>安全设置</b><span>登录验证码、失败次数限制、IP 白名单、登录有效期</span></li>
+            <li><b>通知中心</b><span>待发货订单、库存告急、卡密系统异常实时提醒</span></li>
+          </ul>
+        </div>
+        <div class="spec-col reveal" style="--d:.12s">
+          <div class="spec-title"><iconify-icon icon="ph:paint-brush-bold"></iconify-icon><h3>体验与设计</h3></div>
+          <ul>
+            <li><b>桌面与手机分别适配</b><span>手机端底部导航与全屏抽屉，桌面端侧栏与多列表格</span></li>
+            <li><b>三种主题</b><span>浅色、深色与跟随系统，切换即时生效</span></li>
+            <li><b>细致的动效</b><span>页面切换、数字滚动、卡片入场与扫码动画</span></li>
+            <li><b>约 4.5 万个图标</b><span>9 个 Iconify 图标库按需启用，不传图片也能做出好看的商品卡片</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="note reveal">
+        <iconify-icon icon="ph:info-bold"></iconify-icon>
+        <p><b>关于支付：</b>支付宝、微信、USDT 真实支付通道正在开发中。当前默认开启沙箱模式，扫码页为模拟支付，用于演示完整流程；正式运营可使用余额支付。</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap assure">
+      <div class="assure-head reveal">
+        <h2>卖得放心<br>管得省心</h2>
+        <p class="lead">从下单、发货到售后，每一个环节都替店主考虑到了。</p>
+      </div>
+      <div class="features">
+        <div class="feature reveal"><iconify-icon icon="ph:shield-check-bold"></iconify-icon><h3>绝不重复售卖</h3><p>发货前先向卡密系统确认售出，卡密已在别处使用时自动换一张。</p></div>
+        <div class="feature reveal" style="--d:.08s"><iconify-icon icon="ph:arrow-counter-clockwise-bold"></iconify-icon><h3>退款可回收</h3><p>订单退款时撤销售出，卡密回到卡密系统，可以重新销售。</p></div>
+        <div class="feature reveal"><iconify-icon icon="ph:toggle-right-bold"></iconify-icon><h3>状态联动</h3><p>卡密系统暂停对接时自动停售对应卡密，恢复后自动重新开售。</p></div>
+        <div class="feature reveal" style="--d:.08s"><iconify-icon icon="ph:lock-key-bold"></iconify-icon><h3>签名防重放</h3><p>双方请求均使用 HMAC-SHA256 签名，并校验时间戳与随机串。</p></div>
+        <div class="feature reveal"><iconify-icon icon="ph:fingerprint-bold"></iconify-icon><h3>不改动卡密本身</h3><p>只读取未使用的卡密并回传售出状态，不影响卡密的验证与激活。</p></div>
+        <div class="feature reveal" style="--d:.08s"><iconify-icon icon="ph:rocket-launch-bold"></iconify-icon><h3>开箱即用</h3><p>首次启动自动建表并写入示例数据，配置好数据库就能上线。</p></div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="secure reveal">
+        <div>
+          <h3>对接安全，细节到位</h3>
+          <p>双方所有请求都使用 HMAC-SHA256 签名，覆盖方法、路径、时间戳、随机串与请求体摘要，卡密系统的响应同样验签。</p>
+        </div>
+        <div class="nums">
+          <div class="num"><strong>±300<small>秒</small></strong><span>时间戳超出范围的请求直接拒绝</span></div>
+          <div class="num"><strong>10<small>分钟</small></strong><span>随机串不可重复，一键对接窗口同样 10 分钟</span></div>
+          <div class="num"><strong>30<small>天</small></strong><span>推送事件去重，重复推送不会重复入库</span></div>
+          <div class="num"><strong>3<small>次</small></strong><span>连续收到对接 ID 不存在时自动解除对接</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="tour">
+    <div class="wrap gallery-head reveal">
+      <div>
+        <h2>截图一览</h2>
+        <p class="lead">左右滑动浏览，点击任意截图查看大图并切换上一张、下一张。</p>
+      </div>
+      <div class="g-ctrl">
+        <button class="icon-btn" type="button" id="gPrev" aria-label="向左滚动"><iconify-icon icon="ph:arrow-left-bold"></iconify-icon></button>
+        <button class="icon-btn" type="button" id="gNext" aria-label="向右滚动"><iconify-icon icon="ph:arrow-right-bold"></iconify-icon></button>
+      </div>
+    </div>
+    <div class="gallery reveal" id="gallery-strip">
+      <figure class="g-item desk"><button type="button"><img src="assets/home-light.webp" data-shot="home" data-title="商城首页" data-desc="分类导航、热销商品与实时成交动态" alt="商城首页" width="2560" height="1600" loading="lazy"></button><figcaption><b>商城首页</b>分类导航与成交动态</figcaption></figure>
+      <figure class="g-item mob"><button type="button"><img src="assets/m-product-light.webp" data-shot="m-product" data-title="手机端商品详情" data-desc="价格、库存、购买数量与联系方式" alt="手机端商品详情" width="1170" height="2532" loading="lazy"></button><figcaption><b>商品详情</b>手机端</figcaption></figure>
+      <figure class="g-item mob"><button type="button"><img src="assets/m-pay-light.webp" data-shot="m-pay" data-title="手机端支付页" data-desc="收款二维码与支付倒计时" alt="手机端支付页" width="1170" height="2532" loading="lazy"></button><figcaption><b>支付页</b>手机端</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="assets/dashboard-light.webp" data-shot="dashboard" data-title="管理后台仪表盘" data-desc="经营数据、销售趋势与分类销售占比" alt="管理后台仪表盘" width="2560" height="1600" loading="lazy"></button><figcaption><b>仪表盘</b>经营数据与销售趋势</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="assets/product-cards-light.webp" data-shot="product-cards" data-title="商品卡密与自动配卡" data-desc="配置自动配卡分类，从卡密池添加或导入卡密" alt="商品卡密与自动配卡" width="2560" height="1600" loading="lazy"></button><figcaption><b>自动配卡</b>商品卡密面板</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="assets/cards-light.webp" data-shot="cards" data-title="卡密管理" data-desc="统计、筛选、批量操作与来源状态" alt="卡密管理" width="2560" height="1600" loading="lazy"></button><figcaption><b>卡密管理</b>统一管理全部卡密</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="assets/kami-light.webp" data-shot="kami" data-title="卡密系统对接设置" data-desc="心跳、自动同步状态与对接地址" alt="卡密系统对接设置" width="2560" height="1600" loading="lazy"></button><figcaption><b>对接设置</b>心跳与同步状态</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="deploy">
+    <div class="wrap deploy">
+      <div class="reveal">
+        <h2>几分钟完成部署</h2>
+        <p class="lead">前后端分离，后端单个 Jar 包运行，前端构建为静态文件，交给 Nginx 托管即可。</p>
+        <div class="reqs">
+          <span class="req"><iconify-icon icon="ph:coffee-bold"></iconify-icon>JDK 21+</span>
+          <span class="req"><iconify-icon icon="ph:database-bold"></iconify-icon>MySQL 8+</span>
+          <span class="req"><iconify-icon icon="ph:lightning-bold"></iconify-icon>Redis 5+</span>
+          <span class="req"><iconify-icon icon="ph:package-bold"></iconify-icon>Node.js 18+</span>
+          <span class="req"><iconify-icon icon="ph:wrench-bold"></iconify-icon>Maven 3.8+</span>
+        </div>
+        <div class="access">
+          <div><span>商城前台</span><code>http://localhost:1506</code></div>
+          <div><span>管理后台</span><code>http://localhost:1506/admin</code></div>
+          <div><span>后端接口</span><code>http://localhost:1505/api</code></div>
+        </div>
+        <div class="deploy-cta">
+          <a class="btn btn-primary" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+          <a class="btn btn-ghost" href="#" data-link="docs"><iconify-icon icon="ph:book-open-bold"></iconify-icon>阅读部署文档</a>
+        </div>
+      </div>
+      <div class="term reveal" style="--d:.1s">
+        <div class="term-bar" role="tablist" aria-label="部署方式">
+          <button class="term-tab" role="tab" aria-selected="true" data-code="c-src">源码运行</button>
+          <button class="term-tab" role="tab" aria-selected="false" data-code="c-prod">生产部署</button>
+          <button class="copy" type="button" id="copy"><iconify-icon icon="ph:copy"></iconify-icon><span>复制</span></button>
+        </div>
+<pre id="c-src"><span class="c"># 1. 后端：修改 application.properties 中的数据库与 Redis 配置</span>
+<span class="k">cd</span> backend
+<span class="k">mvn</span> spring-boot:run          <span class="c"># 监听 1505，首次启动自动建表</span>
+
+<span class="c"># 2. 前端：开发模式，/api 自动代理到 1505</span>
+<span class="k">cd</span> vue
+<span class="k">npm</span> install
+<span class="k">npm</span> run dev                 <span class="c"># 打开 http://localhost:1506</span></pre>
+<pre id="c-prod" hidden><span class="c"># 后端打包并后台运行</span>
+<span class="k">cd</span> backend <span class="k">&amp;&amp;</span> <span class="k">mvn</span> -DskipTests package
+<span class="k">nohup java</span> -jar target/*.jar <span class="s">&gt; faka.log 2&gt;&amp;1 &amp;</span>
+
+<span class="c"># 前端构建，dist 目录交给 Nginx</span>
+<span class="k">cd</span> vue <span class="k">&amp;&amp;</span> <span class="k">npm</span> install <span class="k">&amp;&amp;</span> <span class="k">npm</span> run build
+
+<span class="c"># Nginx：静态文件 + /api 反向代理</span>
+location / { <span class="k">try_files</span> $uri $uri/ /index.html; }
+location /api/ { <span class="k">proxy_pass</span> <span class="s">http://127.0.0.1:1505</span>; }</pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap faq-wrap">
+      <div class="faq-head reveal">
+        <h2>常见问题</h2>
+        <p class="lead">没有找到答案？欢迎到 GitHub 提交 Issue。</p>
+      </div>
+      <div class="faq reveal">
+        <details open>
+          <summary>必须搭配小小怪卡密系统使用吗？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">不必须。XXG发卡网可以独立使用，在后台批量导入卡密（支持 TXT 文件，自动全局去重）即可开卖。搭配小小怪卡密系统后，卡密的生成、上架、售出与验证可以全程自动流转。</p>
+        </details>
+        <details>
+          <summary>两套系统不在同一台服务器，还能对接吗？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">可以。一键对接仅限本机或内网，跨服务器时在卡密系统中手动添加发卡网，再把对接 ID 与密钥填入发卡网设置页即可，还可以额外配置一个内网地址作为备用线路。</p>
+        </details>
+        <details>
+          <summary>同一张卡密会不会卖给两个人？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">不会。卡密分配与库存扣减在数据库事务中完成；来自卡密系统的卡密在发货前会先回传售出，卡密系统确认后才发货，已被他处使用的卡密会自动换成另一张。</p>
+        </details>
+        <details>
+          <summary>订单退款后，卡密怎么处理？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">退款时可以选择回收卡密并重新上架。手动导入的卡密直接回收；来自卡密系统的卡密会先撤销售出，回到卡密系统重新可售，买家已经使用过的卡密则保持已售。</p>
+        </details>
+        <details>
+          <summary>现在支持哪些支付方式？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">当前支持余额支付。支付宝、微信、USDT 真实支付通道正在开发中，默认开启的沙箱模式提供模拟扫码支付，便于演示和测试完整流程，正式运营前请在后台关闭沙箱模式。</p>
+        </details>
+        <details>
+          <summary>不同规格的卡密能分别卖给不同商品吗？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">可以。卡密系统的卡密按「应用 + 规格」自动分类，例如「我的软件 · 30天卡」，每个分类可以配置给一个商品，一个商品也可以绑定多个分类。未配置的卡密进入卡密池，随时可以手动上架。</p>
+        </details>
+        <details>
+          <summary>初始管理员账号在哪里设置？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">在 <code>application.properties</code> 的 <code>xxg.init.admin-username</code> 与 <code>xxg.init.admin-password</code> 中配置，首次登录后台后请立即修改密码。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <div class="final-box reveal">
+        <span class="final-logo"><img src="assets/logo.png" alt="" width="56" height="56"></span>
+        <h2>搭配小小怪卡密系统<br>搭建完整的卡密售卖闭环</h2>
+        <p>卡密系统负责生成与验证，XXG发卡网负责销售与发货，两者开源免费，部署在自己的服务器上。</p>
+        <div class="final-cta">
+          <a class="btn btn-primary" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+          <a class="btn btn-ghost" href="#" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:arrow-square-out"></iconify-icon>了解小小怪卡密系统</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="#top"><img src="assets/logo.png" alt="" width="34" height="34"><span>XXG发卡网</span></a>
+        <p>开源、可自部署的数字商品自动发卡系统，无感对接小小怪卡密系统。</p>
+      </div>
+      <div>
+        <h4>产品</h4>
+        <ul>
+          <li><a href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple"></iconify-icon>下载发布版</a></li>
+          <li><a href="#" data-link="repo" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>GitHub 源码</a></li>
+          <li><a href="#" data-link="docs"><iconify-icon icon="ph:book-open"></iconify-icon>使用文档</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>小小怪卡密系统</h4>
+        <ul>
+          <li><a href="#" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>GitHub</a></li>
+          <li><a href="#" data-link="kamiGitee" target="_blank" rel="noopener"><iconify-icon icon="simple-icons:gitee"></iconify-icon>Gitee</a></li>
+          <li><a href="#" data-link="kamiSite" target="_blank" rel="noopener"><iconify-icon icon="ph:globe"></iconify-icon>官网</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>导航</h4>
+        <ul>
+          <li><a href="#kami">卡密对接</a></li>
+          <li><a href="#features">功能清单</a></li>
+          <li><a href="#gallery">截图一览</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year">2026</span> XXG发卡网</span>
+      <span>仅用于合法合规的数字商品销售</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lb" role="dialog" aria-modal="true" aria-label="截图大图" hidden>
+  <div class="lb-top">
+    <div><b id="lbTitle"></b><span id="lbDesc"></span></div>
+    <button class="lb-btn" type="button" id="lbClose" aria-label="关闭"><iconify-icon icon="ph:x-bold"></iconify-icon></button>
+  </div>
+  <div class="lb-stage"><img id="lbImg" alt=""></div>
+  <div class="lb-nav">
+    <button class="lb-btn" type="button" id="lbPrev" aria-label="上一张"><iconify-icon icon="ph:caret-left-bold"></iconify-icon></button>
+    <button class="lb-btn" type="button" id="lbNext" aria-label="下一张"><iconify-icon icon="ph:caret-right-bold"></iconify-icon></button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><iconify-icon icon="ph:book-open-bold"></iconify-icon><span>文档整理中，敬请期待</span></div>
+
+<script>
+  // 站点链接统一在这里配置；docs 留空时点击会提示“文档整理中”
+  const LINKS = {
+    releases: 'https://github.com/xxg-yyds/xxgfaka/releases',
+    repo: 'https://github.com/xxg-yyds/xxgfaka',
+    docs: '',
+    kami: 'https://github.com/xxg-yyds/xxgkami-pro',
+    kamiGitee: 'https://gitee.com/xiaoxiaoguai-yyds/xxgkami-pro',
+    kamiSite: 'http://www.xxgkami.com'
+  }
+
+  const toast = document.getElementById('toast')
+  let toastTimer
+  document.querySelectorAll('[data-link]').forEach((a) => {
+    const url = LINKS[a.dataset.link]
+    if (url) {
+      a.href = url
+      return
+    }
+    a.removeAttribute('target')
+    a.addEventListener('click', (e) => {
+      e.preventDefault()
+      toast.classList.add('show')
+      clearTimeout(toastTimer)
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2400)
+    })
+  })
+
+  // 主题：默认跟随系统，手动切换后记住选择；截图随主题切换
+  const root = document.documentElement
+  const media = matchMedia('(prefers-color-scheme: dark)')
+  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : media.matches)
+  const applyShots = () => {
+    const mode = isDark() ? 'dark' : 'light'
+    document.querySelectorAll('img[data-shot]').forEach((img) => {
+      const src = `assets/${img.dataset.shot}-${mode}.webp`
+      if (!img.src.endsWith(src)) img.src = src
+    })
+    document.querySelector('meta[name="theme-color"]:not([media])')?.remove()
+    const meta = document.createElement('meta')
+    meta.name = 'theme-color'
+    meta.content = getComputedStyle(root).getPropertyValue('--bg').trim()
+    document.head.append(meta)
+  }
+  applyShots()
+  media.addEventListener('change', () => { if (!root.dataset.theme) applyShots() })
+  document.getElementById('theme').addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark'
+    if (next === (media.matches ? 'dark' : 'light')) {
+      delete root.dataset.theme
+      localStorage.removeItem('xxg-site-theme')
+    } else {
+      root.dataset.theme = next
+      localStorage.setItem('xxg-site-theme', next)
+    }
+    applyShots()
+  })
+
+  const nav = document.getElementById('nav')
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 8)
+  addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) {
+        en.target.classList.add('in')
+        io.unobserve(en.target)
+      }
+    })
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+
+  // 产品预览选项卡（支持左右方向键）
+  const tabs = [...document.querySelectorAll('.tab')]
+  const select = (tab) => {
+    tabs.forEach((t) => {
+      const on = t === tab
+      t.setAttribute('aria-selected', on)
+      t.tabIndex = on ? 0 : -1
+      document.getElementById(t.getAttribute('aria-controls')).classList.toggle('active', on)
+    })
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t))
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]
+      select(next)
+      next.focus()
+    })
+  })
+
+  // 部署代码切换与复制
+  const termTabs = [...document.querySelectorAll('.term-tab')]
+  termTabs.forEach((t) => t.addEventListener('click', () => {
+    termTabs.forEach((x) => {
+      x.setAttribute('aria-selected', x === t)
+      document.getElementById(x.dataset.code).hidden = x !== t
+    })
+  }))
+  const copyBtn = document.getElementById('copy')
+  copyBtn.addEventListener('click', async () => {
+    const code = document.querySelector('.term pre:not([hidden])').innerText
+    try {
+      await navigator.clipboard.writeText(code)
+      copyBtn.classList.add('done')
+      copyBtn.querySelector('span').textContent = '已复制'
+      copyBtn.querySelector('iconify-icon').setAttribute('icon', 'ph:check-bold')
+      setTimeout(() => {
+        copyBtn.classList.remove('done')
+        copyBtn.querySelector('span').textContent = '复制'
+        copyBtn.querySelector('iconify-icon').setAttribute('icon', 'ph:copy')
+      }, 1800)
+    } catch {}
+  })
+
+  // 3 秒同步演示：与圆环动画同一节拍
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const tick = document.getElementById('tick')
+  const countEl = document.getElementById('syncCount')
+  const addedEl = document.getElementById('syncAdded')
+  if (!reduce) {
+    let left = 3, count = 0, added = 0
+    const render = () => { tick.innerHTML = `${left}<small>s</small>` }
+    document.querySelector('.ring .bar').addEventListener('animationiteration', () => {
+      left = 3
+      count += 1
+      if (Math.random() < 0.35) added += 1 + Math.floor(Math.random() * 3)
+      countEl.textContent = count
+      addedEl.textContent = added
+      render()
+    })
+    setInterval(() => { left = Math.max(1, left - 1); render() }, 1000)
+  }
+
+  // 卡密管理标注：编号与说明互相高亮
+  const marks = document.querySelectorAll('[data-hs]')
+  marks.forEach((el) => {
+    const on = (v) => marks.forEach((m) => m.classList.toggle('on', v && m.dataset.hs === el.dataset.hs))
+    el.addEventListener('mouseenter', () => on(true))
+    el.addEventListener('mouseleave', () => on(false))
+    el.addEventListener('focus', () => on(true))
+    el.addEventListener('blur', () => on(false))
+  })
+
+  // 截图一览横向滚动
+  const strip = document.getElementById('gallery-strip')
+  const step = () => strip.querySelector('.g-item').offsetWidth + 20
+  document.getElementById('gPrev').addEventListener('click', () => strip.scrollBy({ left: -step(), behavior: 'smooth' }))
+  document.getElementById('gNext').addEventListener('click', () => strip.scrollBy({ left: step(), behavior: 'smooth' }))
+
+  // 大图预览：页面内所有截图可点击放大，按截图一览的顺序切换
+  const lb = document.getElementById('lb')
+  const lbImg = document.getElementById('lbImg')
+  const items = [...strip.querySelectorAll('img[data-shot]')].map((img) => ({ shot: img.dataset.shot, title: img.dataset.title, desc: img.dataset.desc }))
+  let cur = 0
+  let lastFocus = null
+  const show = (i) => {
+    cur = (i + items.length) % items.length
+    const it = items[cur]
+    lbImg.dataset.shot = it.shot
+    lbImg.alt = it.title
+    lbImg.src = `assets/${it.shot}-${isDark() ? 'dark' : 'light'}.webp`
+    document.getElementById('lbTitle').textContent = it.title
+    document.getElementById('lbDesc').textContent = `${it.desc}（${cur + 1} / ${items.length}）`
+  }
+  const openLb = (shot) => {
+    lastFocus = document.activeElement
+    show(Math.max(0, items.findIndex((it) => it.shot === shot)))
+    lb.hidden = false
+    requestAnimationFrame(() => lb.classList.add('open'))
+    document.body.style.overflow = 'hidden'
+    document.getElementById('lbClose').focus()
+  }
+  const closeLb = () => {
+    lb.classList.remove('open')
+    document.body.style.overflow = ''
+    setTimeout(() => { lb.hidden = true }, 300)
+    lastFocus?.focus()
+  }
+  document.querySelectorAll('main img[data-shot]').forEach((img) => {
+    img.classList.add('zoomable')
+    const target = img.closest('button') || img
+    target.addEventListener('click', () => openLb(img.dataset.shot))
+  })
+  document.getElementById('lbClose').addEventListener('click', closeLb)
+  document.getElementById('lbPrev').addEventListener('click', () => show(cur - 1))
+  document.getElementById('lbNext').addEventListener('click', () => show(cur + 1))
+  lb.addEventListener('click', (e) => { if (e.target === lb || e.target.classList.contains('lb-stage')) closeLb() })
+  addEventListener('keydown', (e) => {
+    if (lb.hidden) return
+    if (e.key === 'Escape') closeLb()
+    if (e.key === 'ArrowLeft') show(cur - 1)
+    if (e.key === 'ArrowRight') show(cur + 1)
+  })
+  let touchX = null
+  lb.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX }, { passive: true })
+  lb.addEventListener('touchend', (e) => {
+    if (touchX === null) return
+    const dx = e.changedTouches[0].clientX - touchX
+    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1))
+    touchX = null
+  })
+
+  document.getElementById('year').textContent = new Date().getFullYear()
+</script>
+</body>
+</html>
