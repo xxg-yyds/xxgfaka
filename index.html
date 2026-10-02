@@ -3,19 +3,146 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>XXG发卡网 | 开源自动发卡系统，无感对接小小怪卡密系统</title>
-<meta name="description" content="XXG发卡网是一套开源、可自部署的数字商品自动发卡系统。付款即发货，与小小怪卡密系统一键对接，卡密生成后几秒内自动上架。">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<title>XXG发卡网 | 开源自动发卡系统，发卡网源码免费下载</title>
+<meta name="description" content="XXG发卡网是开源免费的自动发卡系统，提供完整发卡网源码，游戏点卡、影音会员、软件激活码等虚拟商品付款即自动发货。无感对接小小怪卡密系统，卡密生成后几秒内自动上架，售出自动回传。Vue 3 + Spring Boot 开发，支持自部署。">
+<meta name="keywords" content="发卡网,发卡网源码,自动发卡系统,开源发卡系统,发卡平台,卡密销售系统,自动发货平台,虚拟商品自动发货,个人发卡网搭建,卡密系统对接,小小怪卡密系统,XXG发卡网">
+<meta name="author" content="XXG发卡网">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="canonical" href="https://xxg-yyds.github.io/xxgfaka/">
 <meta name="theme-color" content="#f6f8f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0f0d" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="favicon.ico">
-<link rel="apple-touch-icon" href="assets/logo.png">
-<meta property="og:title" content="XXG发卡网">
-<meta property="og:description" content="开源自动发卡系统，无感对接小小怪卡密系统。">
-<meta property="og:image" content="assets/home-light.webp">
+<link rel="icon" href="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/favicon.ico" sizes="any">
+<link rel="icon" href="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/logo.png" type="image/png">
+<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/logo.png">
+<link rel="manifest" href="site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="XXG发卡网">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:url" content="https://xxg-yyds.github.io/xxgfaka/">
+<meta property="og:title" content="XXG发卡网 | 开源自动发卡系统，无感对接小小怪卡密系统">
+<meta property="og:description" content="开源免费的发卡网源码，付款即自动发货。与小小怪卡密系统一键对接，卡密生成后几秒内自动上架，售出自动回传。">
+<meta property="og:image" content="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="XXG发卡网：开源自动发卡系统">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="XXG发卡网 | 开源自动发卡系统">
+<meta name="twitter:description" content="开源免费的发卡网源码，付款即自动发货，无感对接小小怪卡密系统。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/og-cover.jpg">
+
+<link rel="preconnect" href="https://code.iconify.design" crossorigin>
+<link rel="preconnect" href="https://api.iconify.design" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/home-light.webp" media="(prefers-color-scheme: light)" fetchpriority="high">
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/home-dark.webp" media="(prefers-color-scheme: dark)" fetchpriority="high">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://xxg-yyds.github.io/xxgfaka/#website",
+      "url": "https://xxg-yyds.github.io/xxgfaka/",
+      "name": "XXG发卡网",
+      "alternateName": ["XXG 发卡系统", "xxgfaka"],
+      "inLanguage": "zh-CN",
+      "description": "开源免费的自动发卡系统与发卡网源码，无感对接小小怪卡密系统。"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://xxg-yyds.github.io/xxgfaka/#software",
+      "name": "XXG发卡网",
+      "alternateName": "XXG 自动发卡系统",
+      "url": "https://xxg-yyds.github.io/xxgfaka/",
+      "description": "XXG发卡网是开源、可自部署的数字商品自动发卡系统。买家付款后自动发货，支持游戏点卡、影音会员、软件激活码、授权卡密等虚拟商品，并可无感对接小小怪卡密系统，实现卡密生成、上架、售出、退款全程自动流转。",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "自动发卡系统",
+      "operatingSystem": "Linux, Windows, macOS",
+      "softwareRequirements": "JDK 21+, MySQL 8+, Redis 5+, Node.js 18+",
+      "inLanguage": "zh-CN",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+      "downloadUrl": "https://github.com/xxg-yyds/xxgfaka/releases",
+      "codeRepository": "https://github.com/xxg-yyds/xxgfaka",
+      "image": "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/og-cover.jpg",
+      "screenshot": [
+        "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/home-light.webp",
+        "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/dashboard-light.webp",
+        "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/cards-light.webp",
+        "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/product-cards-light.webp",
+        "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/kami-light.webp",
+        "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/m-product-light.webp",
+        "https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/m-pay-light.webp"
+      ],
+      "featureList": [
+        "付款后自动发货，卡密展示在订单页并可邮件送达",
+        "一键对接小小怪卡密系统，自动下发对接 ID 与密钥",
+        "四重同步：实时推送、每 3 秒定时同步、心跳同步、每 30 分钟全量对账",
+        "按应用和规格自动配卡，卡密池手动或按数量上架",
+        "售出回传确认，绝不重复售卖，退款可回收卡密",
+        "HMAC-SHA256 签名与防重放",
+        "游客下单、订单查询、用户中心、优惠券、独立店铺页",
+        "管理后台：仪表盘、商品、卡密、订单、买家、优惠券、系统设置",
+        "桌面端与手机端适配，浅色与深色主题"
+      ],
+      "isRelatedTo": {
+        "@type": "SoftwareApplication",
+        "name": "小小怪卡密系统",
+        "url": "https://github.com/xxg-yyds/xxgkami-pro"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://xxg-yyds.github.io/xxgfaka/#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "XXG发卡网是免费的吗？", "acceptedAnswer": { "@type": "Answer", "text": "是的。XXG发卡网的完整源码公开在 GitHub，可以免费下载并部署在自己的服务器上，没有按订单抽成，也没有功能限制。" } },
+        { "@type": "Question", "name": "如何搭建自己的发卡网？", "acceptedAnswer": { "@type": "Answer", "text": "准备一台安装了 JDK 21、MySQL 8 和 Redis 5 的服务器，下载发布包或源码，修改数据库配置后启动后端，再把前端构建产物交给 Nginx 托管。首次启动会自动建表并写入示例数据，几分钟就能上线。" } },
+        { "@type": "Question", "name": "必须搭配小小怪卡密系统使用吗？", "acceptedAnswer": { "@type": "Answer", "text": "不必须。XXG发卡网可以独立使用，在后台批量导入卡密（支持 TXT 文件，自动全局去重）即可开卖。搭配小小怪卡密系统后，卡密的生成、上架、售出与验证可以全程自动流转。" } },
+        { "@type": "Question", "name": "两套系统不在同一台服务器，还能对接吗？", "acceptedAnswer": { "@type": "Answer", "text": "可以。一键对接仅限本机或内网，跨服务器时在卡密系统中手动添加发卡网，再把对接 ID 与密钥填入发卡网设置页即可，还可以额外配置一个内网地址作为备用线路。" } },
+        { "@type": "Question", "name": "同一张卡密会不会卖给两个人？", "acceptedAnswer": { "@type": "Answer", "text": "不会。卡密分配与库存扣减在数据库事务中完成；来自卡密系统的卡密在发货前会先回传售出，卡密系统确认后才发货，已被他处使用的卡密会自动换成另一张。" } },
+        { "@type": "Question", "name": "订单退款后，卡密怎么处理？", "acceptedAnswer": { "@type": "Answer", "text": "退款时可以选择回收卡密并重新上架。手动导入的卡密直接回收；来自卡密系统的卡密会先撤销售出，回到卡密系统重新可售，买家已经使用过的卡密则保持已售。" } },
+        { "@type": "Question", "name": "现在支持哪些支付方式？", "acceptedAnswer": { "@type": "Answer", "text": "当前支持余额支付。支付宝、微信、USDT 真实支付通道正在开发中，默认开启的沙箱模式提供模拟扫码支付，便于演示和测试完整流程，正式运营前请在后台关闭沙箱模式。" } },
+        { "@type": "Question", "name": "不同规格的卡密能分别卖给不同商品吗？", "acceptedAnswer": { "@type": "Answer", "text": "可以。卡密系统的卡密按「应用 + 规格」自动分类，例如「我的软件 · 30天卡」，每个分类可以配置给一个商品，一个商品也可以绑定多个分类。未配置的卡密进入卡密池，随时可以手动上架。" } },
+        { "@type": "Question", "name": "初始管理员账号在哪里设置？", "acceptedAnswer": { "@type": "Answer", "text": "在 application.properties 的 xxg.init.admin-username 与 xxg.init.admin-password 中配置，首次登录后台后请立即修改密码。" } }
+      ]
+    }
+  ]
+}
+</script>
 <script>
+  // 图片资源优先用 GitHub raw；加载失败时依次改用 jsDelivr 镜像、站点本地文件
   (function () {
+    var bases = [
+      'https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/',
+      'https://cdn.jsdelivr.net/gh/xxg-yyds/xxgfaka@main/',
+      ''
+    ]
+    var cur = 0
+    window.xxgAsset = function (path) { return bases[cur] + path }
+    addEventListener('error', function (e) {
+      var img = e.target
+      if (!img || img.tagName !== 'IMG') return
+      for (var i = 0; i < bases.length - 1; i++) {
+        if (img.src.indexOf(bases[i]) === 0) {
+          cur = Math.max(cur, i + 1)
+          img.src = bases[cur] + img.src.slice(bases[i].length)
+          return
+        }
+      }
+    }, true)
+  })()
+  ;(function () {
+    var root = document.documentElement
+    root.classList.add('js')
     var t = localStorage.getItem('xxg-site-theme')
-    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+    if (t === 'light' || t === 'dark') root.dataset.theme = t
   })()
 </script>
 <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js" defer></script>
@@ -106,7 +233,6 @@
   .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
   section { padding-block: clamp(72px, 10vw, 128px); }
   h1, h2, h3 { margin: 0; color: var(--ink); text-wrap: balance; }
-  h1, h2 { word-break: keep-all; overflow-wrap: anywhere; }
   h2 { font-size: clamp(28px, 3.4vw, 42px); line-height: 1.22; font-weight: 800; letter-spacing: -0.02em; }
   h3 { font-size: 18px; line-height: 1.4; font-weight: 700; }
   p { margin: 0; text-wrap: pretty; }
@@ -362,6 +488,16 @@
   .footer ul a:hover { color: var(--accent); }
   .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 13.5px; }
 
+  /* 适用商品 */
+  .uses { padding-block: clamp(56px, 8vw, 96px) 0; }
+  .uses-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .use-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .use-list li { display: grid; grid-template-columns: 28px 1fr; column-gap: 12px; align-items: center; padding: 16px 18px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); transition: border-color .2s, transform .3s var(--ease); }
+  .use-list li:hover { border-color: color-mix(in srgb, var(--accent) 40%, transparent); transform: translateY(-2px); }
+  .use-list iconify-icon { grid-row: span 2; font-size: 24px; color: var(--accent); }
+  .use-list b { font-size: 15.5px; }
+  .use-list span { font-size: 13px; color: var(--ink-3); }
+
   /* 两种对接方式 */
   .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--line); }
   .mode { padding: 24px 26px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
@@ -507,8 +643,8 @@
   .toast iconify-icon { font-size: 18px; color: var(--accent); }
 
   /* 动效 */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
-  .reveal.in { opacity: 1; transform: none; }
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+  .js .reveal.in { opacity: 1; transform: none; }
   .hero-in > * { animation: rise .9s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
   .stage { animation: stage 1.1s var(--ease) .2s both; }
   .stage .phone { animation: phone 1.1s var(--ease) .45s both; }
@@ -518,7 +654,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-    .reveal { opacity: 1; transform: none; }
+    .js .reveal { opacity: 1; transform: none; }
     .ring .bar { stroke-dashoffset: 0; }
   }
 
@@ -543,7 +679,7 @@
     .flow li:last-child { padding-bottom: 0; }
     .flow-icon { grid-row: span 3; }
     .flow-no { margin-top: 4px; }
-    .cards-head, .faq-wrap, .secure { grid-template-columns: 1fr; }
+    .cards-head, .faq-wrap, .secure, .uses-grid { grid-template-columns: 1fr; }
     .faq-head { position: static; }
     .legend { grid-template-columns: 1fr 1fr; }
     .spec { grid-template-columns: 1fr 1fr; }
@@ -580,6 +716,10 @@
     .term pre { font-size: 12.5px; padding: 18px; }
     .deploy-cta .btn, .final-cta .btn { flex: 1 1 100%; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
+    .kami-panel { padding: 28px 20px; }
+    .kami-panel h2 { font-size: 25px; }
+    .use-list { grid-template-columns: 1fr 1fr; }
+    .use-list li { padding: 14px; column-gap: 10px; }
     .modes { grid-template-columns: 1fr; margin-top: 36px; padding-top: 32px; }
     .mode { padding: 20px; }
     .hs { width: 24px; height: 24px; font-size: 11px; }
@@ -605,7 +745,7 @@
 <header class="nav" id="nav">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="XXG发卡网 首页">
-      <img src="assets/logo.png" alt="" width="34" height="34">
+      <img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/logo.png" alt="" width="34" height="34">
       <span>XXG发卡网</span>
     </a>
     <nav class="nav-links" aria-label="主导航">
@@ -618,12 +758,12 @@
       <a href="#" data-link="docs">文档</a>
     </nav>
     <div class="nav-right">
-      <a class="icon-btn" href="#" data-link="repo" target="_blank" rel="noopener" aria-label="GitHub 仓库"><iconify-icon icon="ph:github-logo"></iconify-icon></a>
+      <a class="icon-btn" href="https://github.com/xxg-yyds/xxgfaka" data-link="repo" target="_blank" rel="noopener" aria-label="GitHub 仓库"><iconify-icon icon="ph:github-logo"></iconify-icon></a>
       <button class="icon-btn" id="theme" type="button" aria-label="切换浅色或深色主题">
         <iconify-icon class="theme-light-icon" icon="ph:moon"></iconify-icon>
         <iconify-icon class="theme-dark-icon" icon="ph:sun"></iconify-icon>
       </button>
-      <a class="btn btn-primary btn-sm" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+      <a class="btn btn-primary btn-sm" href="https://github.com/xxg-yyds/xxgfaka/releases" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
     </div>
   </div>
 </header>
@@ -635,19 +775,19 @@
       <div class="hero-in">
         <a class="eyebrow" href="#kami" style="--i:0"><b>原生对接</b>小小怪卡密系统，一键即连</a>
         <h1 style="--i:1">付款即发货的<br><em>数字商品</em>发卡网</h1>
-        <p class="lead" style="--i:2">开源、可自部署。卡密在小小怪卡密系统生成，几秒内自动上架，售出自动回传。</p>
+        <p class="lead" style="--i:2">开源免费的自动发卡系统，可自部署。卡密在小小怪卡密系统生成，几秒内自动上架，售出自动回传。</p>
         <div class="hero-cta" style="--i:3">
-          <a class="btn btn-primary" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
-          <a class="btn btn-ghost" href="#" data-link="repo" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>查看源码</a>
+          <a class="btn btn-primary" href="https://github.com/xxg-yyds/xxgfaka/releases" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+          <a class="btn btn-ghost" href="https://github.com/xxg-yyds/xxgfaka" data-link="repo" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>查看源码</a>
         </div>
       </div>
       <div class="stage">
         <div class="browser">
           <div class="browser-bar"><i></i><i></i><i></i><span>shop.example.com</span></div>
-          <img src="assets/home-light.webp" data-shot="home" alt="XXG发卡网商城首页，展示商品分类、热销商品与成交动态" width="2560" height="1600" fetchpriority="high">
+          <img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/home-light.webp" data-shot="home" alt="XXG发卡网商城首页，展示商品分类、热销商品与成交动态" width="2560" height="1600" fetchpriority="high">
         </div>
         <div class="phone">
-          <img src="assets/m-pay-light.webp" data-shot="m-pay" alt="手机端支付页面，展示收款二维码与支付倒计时" width="1170" height="2532">
+          <img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/m-pay-light.webp" data-shot="m-pay" alt="手机端支付页面，展示收款二维码与支付倒计时" width="1170" height="2532">
         </div>
       </div>
     </div>
@@ -666,6 +806,23 @@
       </div>
     </div>
   </div>
+
+  <section class="uses" id="uses" aria-labelledby="uses-title">
+    <div class="wrap uses-grid">
+      <div class="reveal">
+        <h2 id="uses-title">适合销售各类虚拟商品</h2>
+        <p class="lead">只要是能以卡密、兑换码或文本形式交付的商品，都可以用 XXG发卡网自动发货，个人站长和小团队都能轻松上手。</p>
+      </div>
+      <ul class="use-list reveal" style="--d:.08s">
+        <li><iconify-icon icon="ph:game-controller-bold"></iconify-icon><b>游戏点卡</b><span>Steam、Xbox、游戏充值码</span></li>
+        <li><iconify-icon icon="ph:film-strip-bold"></iconify-icon><b>影音会员</b><span>视频、音乐会员兑换码</span></li>
+        <li><iconify-icon icon="ph:key-bold"></iconify-icon><b>软件激活码</b><span>授权码、注册码、序列号</span></li>
+        <li><iconify-icon icon="ph:certificate-bold"></iconify-icon><b>授权卡密</b><span>天卡、月卡、年卡等时长卡</span></li>
+        <li><iconify-icon icon="ph:gift-bold"></iconify-icon><b>礼品卡</b><span>电商与平台礼品卡</span></li>
+        <li><iconify-icon icon="ph:file-text-bold"></iconify-icon><b>文本资源</b><span>账号、教程链接、兑换说明</span></li>
+      </ul>
+    </div>
+  </section>
 
   <section id="kami">
     <div class="wrap">
@@ -689,11 +846,11 @@
               </li>
             </ol>
             <div class="kami-actions">
-              <a class="btn btn-ghost" href="#" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:arrow-square-out"></iconify-icon>了解小小怪卡密系统</a>
+              <a class="btn btn-ghost" href="https://github.com/xxg-yyds/xxgkami-pro" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:arrow-square-out"></iconify-icon>了解小小怪卡密系统</a>
             </div>
           </div>
           <div class="shot reveal" style="--d:.1s">
-            <img src="assets/kami-light.webp" data-shot="kami" alt="发卡网后台的卡密系统对接页，显示在线状态、心跳与自动同步情况" width="2560" height="1600" loading="lazy">
+            <img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/kami-light.webp" data-shot="kami" alt="发卡网后台的卡密系统对接页，显示在线状态、心跳与自动同步情况" width="2560" height="1600" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="modes">
@@ -767,7 +924,7 @@
   <section id="flow" style="padding-top:0">
     <div class="wrap">
       <div class="flow-head reveal">
-        <h2>一笔订单，从下单到发货全程自动</h2>
+        <h2>一笔订单，<br>从下单到发货全程自动</h2>
         <p class="lead">买家付款后无需店主介入。每一步都有兜底，网络抖动、卡密失效、并发抢购都不会出错。</p>
       </div>
       <ol class="flow reveal">
@@ -821,7 +978,7 @@
       </div>
       <div class="panels reveal">
         <div class="panel active" role="tabpanel" id="p-cards" aria-labelledby="t-cards">
-          <div class="shot"><img src="assets/product-cards-light.webp" data-shot="product-cards" alt="商品卡密抽屉，配置自动配卡分类并从卡密池添加卡密" width="2560" height="1600" loading="lazy"></div>
+          <div class="shot"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/product-cards-light.webp" data-shot="product-cards" alt="商品卡密抽屉，配置自动配卡分类并从卡密池添加卡密" width="2560" height="1600" loading="lazy" decoding="async"></div>
           <ul class="points">
             <li><iconify-icon icon="ph:tag-bold"></iconify-icon><div><b>按分类自动配卡</b><span>卡密按应用和规格自动分类，绑定商品后新卡密直接入库。</span></div></li>
             <li><iconify-icon icon="ph:stack-bold"></iconify-icon><div><b>卡密池随取随用</b><span>未分配的卡密进入卡密池，可勾选或按数量上架到任意商品。</span></div></li>
@@ -829,7 +986,7 @@
           </ul>
         </div>
         <div class="panel" role="tabpanel" id="p-dash" aria-labelledby="t-dash">
-          <div class="shot"><img src="assets/dashboard-light.webp" data-shot="dashboard" alt="管理后台仪表盘，展示销售额、订单趋势与库存提醒" width="2560" height="1600" loading="lazy"></div>
+          <div class="shot"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/dashboard-light.webp" data-shot="dashboard" alt="管理后台仪表盘，展示销售额、订单趋势与库存提醒" width="2560" height="1600" loading="lazy" decoding="async"></div>
           <ul class="points">
             <li><iconify-icon icon="ph:chart-bar-bold"></iconify-icon><div><b>经营数据一目了然</b><span>销售额、订单量与趋势图表，按日查看经营状况。</span></div></li>
             <li><iconify-icon icon="ph:bell-ringing-bold"></iconify-icon><div><b>库存告急提醒</b><span>库存不足与待处理订单及时提醒，避免断货。</span></div></li>
@@ -837,7 +994,7 @@
           </ul>
         </div>
         <div class="panel" role="tabpanel" id="p-shop" aria-labelledby="t-shop">
-          <div class="shot"><img src="assets/home-light.webp" data-shot="home" alt="商城首页，展示分类导航与热销商品" width="2560" height="1600" loading="lazy"></div>
+          <div class="shot"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/home-light.webp" data-shot="home" alt="商城首页，展示分类导航与热销商品" width="2560" height="1600" loading="lazy" decoding="async"></div>
           <ul class="points">
             <li><iconify-icon icon="ph:squares-four-bold"></iconify-icon><div><b>分类清晰好找</b><span>分类导航、热销推荐与成交动态，买家快速找到商品。</span></div></li>
             <li><iconify-icon icon="ph:user-circle-bold"></iconify-icon><div><b>游客也能下单</b><span>无需注册即可购买，凭订单号或联系方式随时查单取卡。</span></div></li>
@@ -846,8 +1003,8 @@
         </div>
         <div class="panel" role="tabpanel" id="p-mobile" aria-labelledby="t-mobile">
           <div class="phones">
-            <div class="phone"><img src="assets/m-product-light.webp" data-shot="m-product" alt="手机端商品详情页" width="1170" height="2532" loading="lazy"></div>
-            <div class="phone"><img src="assets/m-pay-light.webp" data-shot="m-pay" alt="手机端支付页" width="1170" height="2532" loading="lazy"></div>
+            <div class="phone"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/m-product-light.webp" data-shot="m-product" alt="手机端商品详情页" width="1170" height="2532" loading="lazy" decoding="async"></div>
+            <div class="phone"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/m-pay-light.webp" data-shot="m-pay" alt="手机端支付页" width="1170" height="2532" loading="lazy" decoding="async"></div>
           </div>
           <ul class="points">
             <li><iconify-icon icon="ph:device-mobile-camera-bold"></iconify-icon><div><b>移动端完整适配</b><span>商城与后台均适配手机，随时随地下单和管理。</span></div></li>
@@ -862,11 +1019,11 @@
   <section id="cards">
     <div class="wrap">
       <div class="cards-head reveal">
-        <h2>卡密管理，<br>一个页面全部搞定</h2>
+        <h2>卡密管理系统，<br>一个页面全部搞定</h2>
         <p class="lead" style="margin-top:0">手动导入的卡密和卡密系统同步来的卡密统一管理。移到或点按截图上的编号，查看每块区域的用途。</p>
       </div>
       <div class="annot reveal">
-        <div class="shot"><img src="assets/cards-light.webp" data-shot="cards" alt="卡密管理页面：顶部操作按钮、统计卡片、筛选栏与卡密列表" width="2560" height="1600" loading="lazy"></div>
+        <div class="shot"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/cards-light.webp" data-shot="cards" alt="卡密管理页面：顶部操作按钮、统计卡片、筛选栏与卡密列表" width="2560" height="1600" loading="lazy" decoding="async"></div>
         <button class="hs" type="button" style="--x:53%;--y:16.8%" data-hs="1" aria-label="标注 1">1</button>
         <button class="hs" type="button" style="--x:47.6%;--y:23.5%" data-hs="2" aria-label="标注 2">2</button>
         <button class="hs" type="button" style="--x:19.5%;--y:40%" data-hs="3" aria-label="标注 3">3</button>
@@ -884,8 +1041,8 @@
   <section id="features" style="padding-top:0">
     <div class="wrap">
       <div class="reveal">
-        <h2>功能清单</h2>
-        <p class="lead">商城、后台、对接一套齐全，不需要再拼装插件。</p>
+        <h2>发卡网功能清单</h2>
+        <p class="lead">商城前台、管理后台、卡密系统对接一套齐全，一份发卡网源码即可搭建完整的卡密销售平台，不需要再拼装插件。</p>
       </div>
       <div class="spec">
         <div class="spec-col reveal">
@@ -964,7 +1121,7 @@
   <section id="gallery" class="tour">
     <div class="wrap gallery-head reveal">
       <div>
-        <h2>截图一览</h2>
+        <h2>发卡系统截图一览</h2>
         <p class="lead">左右滑动浏览，点击任意截图查看大图并切换上一张、下一张。</p>
       </div>
       <div class="g-ctrl">
@@ -973,21 +1130,21 @@
       </div>
     </div>
     <div class="gallery reveal" id="gallery-strip">
-      <figure class="g-item desk"><button type="button"><img src="assets/home-light.webp" data-shot="home" data-title="商城首页" data-desc="分类导航、热销商品与实时成交动态" alt="商城首页" width="2560" height="1600" loading="lazy"></button><figcaption><b>商城首页</b>分类导航与成交动态</figcaption></figure>
-      <figure class="g-item mob"><button type="button"><img src="assets/m-product-light.webp" data-shot="m-product" data-title="手机端商品详情" data-desc="价格、库存、购买数量与联系方式" alt="手机端商品详情" width="1170" height="2532" loading="lazy"></button><figcaption><b>商品详情</b>手机端</figcaption></figure>
-      <figure class="g-item mob"><button type="button"><img src="assets/m-pay-light.webp" data-shot="m-pay" data-title="手机端支付页" data-desc="收款二维码与支付倒计时" alt="手机端支付页" width="1170" height="2532" loading="lazy"></button><figcaption><b>支付页</b>手机端</figcaption></figure>
-      <figure class="g-item desk"><button type="button"><img src="assets/dashboard-light.webp" data-shot="dashboard" data-title="管理后台仪表盘" data-desc="经营数据、销售趋势与分类销售占比" alt="管理后台仪表盘" width="2560" height="1600" loading="lazy"></button><figcaption><b>仪表盘</b>经营数据与销售趋势</figcaption></figure>
-      <figure class="g-item desk"><button type="button"><img src="assets/product-cards-light.webp" data-shot="product-cards" data-title="商品卡密与自动配卡" data-desc="配置自动配卡分类，从卡密池添加或导入卡密" alt="商品卡密与自动配卡" width="2560" height="1600" loading="lazy"></button><figcaption><b>自动配卡</b>商品卡密面板</figcaption></figure>
-      <figure class="g-item desk"><button type="button"><img src="assets/cards-light.webp" data-shot="cards" data-title="卡密管理" data-desc="统计、筛选、批量操作与来源状态" alt="卡密管理" width="2560" height="1600" loading="lazy"></button><figcaption><b>卡密管理</b>统一管理全部卡密</figcaption></figure>
-      <figure class="g-item desk"><button type="button"><img src="assets/kami-light.webp" data-shot="kami" data-title="卡密系统对接设置" data-desc="心跳、自动同步状态与对接地址" alt="卡密系统对接设置" width="2560" height="1600" loading="lazy"></button><figcaption><b>对接设置</b>心跳与同步状态</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/home-light.webp" data-shot="home" data-title="商城首页" data-desc="分类导航、热销商品与实时成交动态" alt="商城首页" width="2560" height="1600" loading="lazy" decoding="async"></button><figcaption><b>商城首页</b>分类导航与成交动态</figcaption></figure>
+      <figure class="g-item mob"><button type="button"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/m-product-light.webp" data-shot="m-product" data-title="手机端商品详情" data-desc="价格、库存、购买数量与联系方式" alt="手机端商品详情" width="1170" height="2532" loading="lazy" decoding="async"></button><figcaption><b>商品详情</b>手机端</figcaption></figure>
+      <figure class="g-item mob"><button type="button"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/m-pay-light.webp" data-shot="m-pay" data-title="手机端支付页" data-desc="收款二维码与支付倒计时" alt="手机端支付页" width="1170" height="2532" loading="lazy" decoding="async"></button><figcaption><b>支付页</b>手机端</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/dashboard-light.webp" data-shot="dashboard" data-title="管理后台仪表盘" data-desc="经营数据、销售趋势与分类销售占比" alt="管理后台仪表盘" width="2560" height="1600" loading="lazy" decoding="async"></button><figcaption><b>仪表盘</b>经营数据与销售趋势</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/product-cards-light.webp" data-shot="product-cards" data-title="商品卡密与自动配卡" data-desc="配置自动配卡分类，从卡密池添加或导入卡密" alt="商品卡密与自动配卡" width="2560" height="1600" loading="lazy" decoding="async"></button><figcaption><b>自动配卡</b>商品卡密面板</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/cards-light.webp" data-shot="cards" data-title="卡密管理" data-desc="统计、筛选、批量操作与来源状态" alt="卡密管理" width="2560" height="1600" loading="lazy" decoding="async"></button><figcaption><b>卡密管理</b>统一管理全部卡密</figcaption></figure>
+      <figure class="g-item desk"><button type="button"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/kami-light.webp" data-shot="kami" data-title="卡密系统对接设置" data-desc="心跳、自动同步状态与对接地址" alt="卡密系统对接设置" width="2560" height="1600" loading="lazy" decoding="async"></button><figcaption><b>对接设置</b>心跳与同步状态</figcaption></figure>
     </div>
   </section>
 
   <section id="deploy">
     <div class="wrap deploy">
       <div class="reveal">
-        <h2>几分钟完成部署</h2>
-        <p class="lead">前后端分离，后端单个 Jar 包运行，前端构建为静态文件，交给 Nginx 托管即可。</p>
+        <h2>几分钟搭建自己的发卡网</h2>
+        <p class="lead">前后端分离，后端单个 Jar 包运行，前端构建为静态文件交给 Nginx 托管。Linux 与 Windows 服务器均可部署。</p>
         <div class="reqs">
           <span class="req"><iconify-icon icon="ph:coffee-bold"></iconify-icon>JDK 21+</span>
           <span class="req"><iconify-icon icon="ph:database-bold"></iconify-icon>MySQL 8+</span>
@@ -1001,7 +1158,7 @@
           <div><span>后端接口</span><code>http://localhost:1505/api</code></div>
         </div>
         <div class="deploy-cta">
-          <a class="btn btn-primary" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+          <a class="btn btn-primary" href="https://github.com/xxg-yyds/xxgfaka/releases" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
           <a class="btn btn-ghost" href="#" data-link="docs"><iconify-icon icon="ph:book-open-bold"></iconify-icon>阅读部署文档</a>
         </div>
       </div>
@@ -1036,11 +1193,19 @@ location /api/ { <span class="k">proxy_pass</span> <span class="s">http://127.0.
   <section id="faq" style="padding-top:0">
     <div class="wrap faq-wrap">
       <div class="faq-head reveal">
-        <h2>常见问题</h2>
+        <h2>发卡网常见问题</h2>
         <p class="lead">没有找到答案？欢迎到 GitHub 提交 Issue。</p>
       </div>
       <div class="faq reveal">
         <details open>
+          <summary>XXG发卡网是免费的吗？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">是的。XXG发卡网的完整源码公开在 GitHub，可以免费下载并部署在自己的服务器上，没有按订单抽成，也没有功能限制。</p>
+        </details>
+        <details>
+          <summary>如何搭建自己的发卡网？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
+          <p class="ans">准备一台安装了 JDK 21、MySQL 8 和 Redis 5 的服务器，下载发布包或源码，修改数据库配置后启动后端，再把前端构建产物交给 Nginx 托管。首次启动会自动建表并写入示例数据，几分钟就能上线。</p>
+        </details>
+        <details>
           <summary>必须搭配小小怪卡密系统使用吗？<iconify-icon icon="ph:plus-bold"></iconify-icon></summary>
           <p class="ans">不必须。XXG发卡网可以独立使用，在后台批量导入卡密（支持 TXT 文件，自动全局去重）即可开卖。搭配小小怪卡密系统后，卡密的生成、上架、售出与验证可以全程自动流转。</p>
         </details>
@@ -1075,12 +1240,12 @@ location /api/ { <span class="k">proxy_pass</span> <span class="s">http://127.0.
   <section class="final">
     <div class="wrap">
       <div class="final-box reveal">
-        <span class="final-logo"><img src="assets/logo.png" alt="" width="56" height="56"></span>
+        <span class="final-logo"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/logo.png" alt="" width="56" height="56"></span>
         <h2>搭配小小怪卡密系统<br>搭建完整的卡密售卖闭环</h2>
         <p>卡密系统负责生成与验证，XXG发卡网负责销售与发货，两者开源免费，部署在自己的服务器上。</p>
         <div class="final-cta">
-          <a class="btn btn-primary" href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
-          <a class="btn btn-ghost" href="#" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:arrow-square-out"></iconify-icon>了解小小怪卡密系统</a>
+          <a class="btn btn-primary" href="https://github.com/xxg-yyds/xxgfaka/releases" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple-bold"></iconify-icon>下载最新版</a>
+          <a class="btn btn-ghost" href="https://github.com/xxg-yyds/xxgkami-pro" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:arrow-square-out"></iconify-icon>了解小小怪卡密系统</a>
         </div>
       </div>
     </div>
@@ -1091,23 +1256,23 @@ location /api/ { <span class="k">proxy_pass</span> <span class="s">http://127.0.
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <a class="brand" href="#top"><img src="assets/logo.png" alt="" width="34" height="34"><span>XXG发卡网</span></a>
+        <a class="brand" href="#top"><img src="https://raw.githubusercontent.com/xxg-yyds/xxgfaka/refs/heads/main/assets/logo.png" alt="" width="34" height="34"><span>XXG发卡网</span></a>
         <p>开源、可自部署的数字商品自动发卡系统，无感对接小小怪卡密系统。</p>
       </div>
       <div>
         <h4>产品</h4>
         <ul>
-          <li><a href="#" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple"></iconify-icon>下载发布版</a></li>
-          <li><a href="#" data-link="repo" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>GitHub 源码</a></li>
+          <li><a href="https://github.com/xxg-yyds/xxgfaka/releases" data-link="releases" target="_blank" rel="noopener"><iconify-icon icon="ph:download-simple"></iconify-icon>下载发布版</a></li>
+          <li><a href="https://github.com/xxg-yyds/xxgfaka" data-link="repo" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>GitHub 源码</a></li>
           <li><a href="#" data-link="docs"><iconify-icon icon="ph:book-open"></iconify-icon>使用文档</a></li>
         </ul>
       </div>
       <div>
         <h4>小小怪卡密系统</h4>
         <ul>
-          <li><a href="#" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>GitHub</a></li>
-          <li><a href="#" data-link="kamiGitee" target="_blank" rel="noopener"><iconify-icon icon="simple-icons:gitee"></iconify-icon>Gitee</a></li>
-          <li><a href="#" data-link="kamiSite" target="_blank" rel="noopener"><iconify-icon icon="ph:globe"></iconify-icon>官网</a></li>
+          <li><a href="https://github.com/xxg-yyds/xxgkami-pro" data-link="kami" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo"></iconify-icon>GitHub</a></li>
+          <li><a href="https://gitee.com/xiaoxiaoguai-yyds/xxgkami-pro" data-link="kamiGitee" target="_blank" rel="noopener"><iconify-icon icon="simple-icons:gitee"></iconify-icon>Gitee</a></li>
+          <li><a href="http://www.xxgkami.com" data-link="kamiSite" target="_blank" rel="noopener"><iconify-icon icon="ph:globe"></iconify-icon>官网</a></li>
         </ul>
       </div>
       <div>
@@ -1142,22 +1307,14 @@ location /api/ { <span class="k">proxy_pass</span> <span class="s">http://127.0.
 <div class="toast" id="toast" role="status" aria-live="polite"><iconify-icon icon="ph:book-open-bold"></iconify-icon><span>文档整理中，敬请期待</span></div>
 
 <script>
-  // 站点链接统一在这里配置；docs 留空时点击会提示“文档整理中”
-  const LINKS = {
-    releases: 'https://github.com/xxg-yyds/xxgfaka/releases',
-    repo: 'https://github.com/xxg-yyds/xxgfaka',
-    docs: '',
-    kami: 'https://github.com/xxg-yyds/xxgkami-pro',
-    kamiGitee: 'https://gitee.com/xiaoxiaoguai-yyds/xxgkami-pro',
-    kamiSite: 'http://www.xxgkami.com'
-  }
+  // 其余链接直接写在 href 里，便于搜索引擎抓取；文档地址填在这里，留空时点击提示“文档整理中”
+  const DOCS_URL = ''
 
   const toast = document.getElementById('toast')
   let toastTimer
-  document.querySelectorAll('[data-link]').forEach((a) => {
-    const url = LINKS[a.dataset.link]
-    if (url) {
-      a.href = url
+  document.querySelectorAll('[data-link="docs"]').forEach((a) => {
+    if (DOCS_URL) {
+      a.href = DOCS_URL
       return
     }
     a.removeAttribute('target')
@@ -1176,8 +1333,8 @@ location /api/ { <span class="k">proxy_pass</span> <span class="s">http://127.0.
   const applyShots = () => {
     const mode = isDark() ? 'dark' : 'light'
     document.querySelectorAll('img[data-shot]').forEach((img) => {
-      const src = `assets/${img.dataset.shot}-${mode}.webp`
-      if (!img.src.endsWith(src)) img.src = src
+      const path = `assets/${img.dataset.shot}-${mode}.webp`
+      if (!img.src.endsWith(path)) img.src = xxgAsset(path)
     })
     document.querySelector('meta[name="theme-color"]:not([media])')?.remove()
     const meta = document.createElement('meta')
@@ -1304,7 +1461,7 @@ location /api/ { <span class="k">proxy_pass</span> <span class="s">http://127.0.
     const it = items[cur]
     lbImg.dataset.shot = it.shot
     lbImg.alt = it.title
-    lbImg.src = `assets/${it.shot}-${isDark() ? 'dark' : 'light'}.webp`
+    lbImg.src = xxgAsset(`assets/${it.shot}-${isDark() ? 'dark' : 'light'}.webp`)
     document.getElementById('lbTitle').textContent = it.title
     document.getElementById('lbDesc').textContent = `${it.desc}（${cur + 1} / ${items.length}）`
   }

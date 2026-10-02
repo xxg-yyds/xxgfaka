@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://faka.example.com/sitemap.xml
+Sitemap: https://xxg-yyds.github.io/xxgfaka/sitemap.xml
